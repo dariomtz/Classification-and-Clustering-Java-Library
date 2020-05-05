@@ -3,7 +3,7 @@ package machineLearning.algebra;
 import java.util.Vector;
 
 public class Algebra {
-    public static double norm(Vector<Double> v){
+    public static <T extends Number> double norm(Vector<T> v){
         double norm = 0;
         int i;
         for(i=0;i<v.size();i++){
@@ -12,29 +12,29 @@ public class Algebra {
         return Math.sqrt(norm);
     }
 
-    public static Vector<Double> sumVector(Vector<Double> a, Vector<Double> b){
+    public static <T extends Number> Vector<Double> sumVector(Vector<T> a, Vector<T> b){
         if(a.size()!= b.size()) return null;
         Vector<Double> sum = new Vector<>();
 
         int i;
         for(i=0;i<a.size();i++){
-            sum.add(a.get(i)+b.get(i));
+            sum.add((double)(a.get(i))+(double)(b.get(i)));
         }
         return sum;
     }
 
-    public static Vector<Double> substractVector(Vector<Double> a, Vector<Double> b){
+    public static <T extends Number> Vector<Double> substractVector(Vector<T> a, Vector<T> b){
         if(a.size()!= b.size()) return null;
         Vector<Double> sub = new Vector<>();
 
         int i;
         for(i=0;i<a.size();i++){
-            sub.add(a.get(i)+b.get(i));
+            sub.add((double)a.get(i)+(double)b.get(i));
         }
         return sub;
     }
 
-    public static Vector<Double> cross(Vector<Double> a, Vector<Double> b){
+    public static <T extends Number> Vector<Double> cross(Vector<T> a, Vector<T> b){
         //Suponiendo que los vectores tienen 3 componentes
         if(a.size()!= b.size()) return null;
         Vector<Double> cross = new Vector<>();
@@ -42,31 +42,31 @@ public class Algebra {
         if(a.size() == 2){
             cross.add(0,0.0);
             cross.add(1,0.0);
-            cross.add(2,(a.get(0)*b.get(1))-(a.get(1)*b.get(0)));
+            cross.add(2,((double)a.get(0)*(double)b.get(1))-((double)a.get(1)*(double)b.get(0)));
         }
         else if(a.size()==3){
-            cross.add(0,((double)a.get(1)*b.get(2))-((double)a.get(2)*b.get(1)));
-            cross.add(1,((double)a.get(0)*b.get(2))-((double)a.get(2)*b.get(0)));
-            cross.add(2,((double)a.get(0)*b.get(1))-((double)a.get(1)*b.get(0)));
+            cross.add(0,((double)a.get(1)*(double)b.get(2))-((double)a.get(2)*(double)b.get(1)));
+            cross.add(1,((double)a.get(0)*(double)b.get(2))-((double)a.get(2)*(double)b.get(0)));
+            cross.add(2,((double)a.get(0)*(double)b.get(1))-((double)a.get(1)*(double)b.get(0)));
         }
         return cross;
     }
 
-    public static double dot(Vector<Double> a, Vector<Double> b){
+    public static <T extends Number> double dot(Vector<T> a, Vector<T> b){
         if(a.size()!= b.size()) return 0;
         double dot = 0;
 
         int i;
         for(i=0;i<a.size();i++){
-            dot += a.get(i)*b.get(i);
+            dot += (double)a.get(i)*(double)b.get(i);
         }
         return dot;
     }
 
-    public static void multEsc(double n, Vector<Double> v){
+    public static <T extends Number> void multEsc(T n, Vector<T> v){
         int i;
         for(i=0;i<v.size();i++){
-            v.add(i,v.get(i)*n);
+            v.add(i,(T)((Number)((double)v.get(i)*(double)n)));
         }
     }
 
