@@ -21,7 +21,7 @@ public class Algebra {
         if(a.size()!= b.size()) return null;
         Vector<Double> sub = new Vector<>();
         int i;
-        for(i=0;i<a.size();i++) sub.add(a.get(i).doubleValue()+b.get(i).doubleValue());
+        for(i=0;i<a.size();i++) sub.add(a.get(i).doubleValue()-b.get(i).doubleValue());
         return sub;
     }
 
@@ -37,7 +37,7 @@ public class Algebra {
         }
         else if(a.size()==3){
             cross.add(0,(a.get(1).doubleValue()*b.get(2).doubleValue())-(a.get(2).doubleValue()*b.get(1).doubleValue()));
-            cross.add(1,(a.get(0).doubleValue()*b.get(2).doubleValue())-(a.get(2).doubleValue()*b.get(0).doubleValue()));
+            cross.add(1,(-(a.get(0).doubleValue()*b.get(2).doubleValue()))+(a.get(2).doubleValue()*b.get(0).doubleValue()));
             cross.add(2,(a.get(0).doubleValue()*b.get(1).doubleValue())-(a.get(1).doubleValue()*b.get(0).doubleValue()));
         }
         return cross;
