@@ -7,7 +7,7 @@ public class Algebra {
         double norm = 0;
         int i;
         for(i=0;i<v.size();i++){
-            norm += Math.pow(v.get(i),2);
+            norm += Math.pow(v.get(i).doubleValue(),2);
         }
         return Math.sqrt(norm);
     }
