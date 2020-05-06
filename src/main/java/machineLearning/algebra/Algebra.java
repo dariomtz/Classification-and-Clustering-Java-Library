@@ -6,30 +6,22 @@ public class Algebra {
     public static <T extends Number> double norm(Vector<T> v){
         double norm = 0;
         int i;
-        for(i=0;i<v.size();i++){
-            norm += Math.pow(v.get(i).doubleValue(),2);
-        }
+        for(i=0;i<v.size();i++) norm += Math.pow(v.get(i).doubleValue(),2);
         return Math.sqrt(norm);
     }
     public static <U extends Number,V extends Number> Vector<Double> sumVector(Vector<U> a, Vector<V> b){
         if(a.size()!= b.size()) return null;
         Vector<Double> sum = new Vector<>();
-
         int i;
-        for(i=0;i<a.size();i++){
-            sum.add(a.get(i).doubleValue()+b.get(i).doubleValue());
-        }
+        for(i=0;i<a.size();i++) sum.add(a.get(i).doubleValue()+b.get(i).doubleValue());
         return sum;
     }
 
     public static <U extends Number,V extends Number> Vector<Double> substractVector(Vector<U> a, Vector<V> b){
         if(a.size()!= b.size()) return null;
         Vector<Double> sub = new Vector<>();
-
         int i;
-        for(i=0;i<a.size();i++){
-            sub.add(a.get(i).doubleValue()+b.get(i).doubleValue());
-        }
+        for(i=0;i<a.size();i++) sub.add(a.get(i).doubleValue()+b.get(i).doubleValue());
         return sub;
     }
 
@@ -62,11 +54,11 @@ public class Algebra {
         return dot;
     }
 
-    public static <T extends Number> void multEsc(T n, Vector<T> v){
+    public static <U extends Number,V extends Number> Vector<Double> multEsc(U n, Vector<V> v){
         int i;
-        for(i=0;i<v.size();i++){
-            v.add(i,(T)((Number)(v.get(i).doubleValue()*n.doubleValue())));
-        }
+        Vector<Double> mult = new Vector<>();
+        for(i=0;i<v.size();i++) mult.add(v.get(i).doubleValue()*n.doubleValue());
+        return mult;
     }
 
 }
