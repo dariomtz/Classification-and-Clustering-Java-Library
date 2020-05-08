@@ -61,4 +61,11 @@ public class Algebra {
         return mult;
     }
 
+    public static <U extends Number> double sum(Vector<U> v){
+        double sum = 0.0;
+        int i;
+        for(i=0;i<v.size();i++)
+            sum += v.get(i).doubleValue();
+        return sum;
+    }
 }
