@@ -61,11 +61,21 @@ public class Algebra {
         return mult;
     }
 
+
     public static <U extends Number> double sum(Vector<U> v){
         double sum = 0.0;
         int i;
         for(i=0;i<v.size();i++)
             sum += v.get(i).doubleValue();
         return sum;
+    }
+
+    public static <U extends Number, V extends Number> double euclideanDistance(Vector<U> u, Vector<V> v){
+        int i;
+        double euclideanD = 0.0;
+        for(i=0;i<u.size();i++){
+            euclideanD += Math.pow(u.get(i).doubleValue() - v.get(i).doubleValue(),2);
+        }
+        return Math.sqrt(euclideanD);
     }
 }

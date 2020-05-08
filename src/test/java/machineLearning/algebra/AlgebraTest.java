@@ -103,7 +103,7 @@ import java.util.Vector;
             }
             @Test
             public void testSumComponents(){
-                Vector<Integer> v4 = new Vector<>();
+              Vector<Integer> v4 = new Vector<>();
                 v4.add(0);
                 v4.add(1);
                 v4.add(2);
@@ -112,5 +112,17 @@ import java.util.Vector;
                 v5.add(0.1);
                 v5.add(0.2);
                 Assert.assertEquals(3.0, Algebra.sum(v4), 0);
+            }
+          @Test
+            public void testEuclideanDistance(){
+                Vector<Integer> v4 = new Vector<>();
+                v4.add(0);
+                v4.add(1);
+                v4.add(2);
+                Vector<Double> v5 = new Vector<>();
+                v5.add(0.0);
+                v5.add(0.1);
+                v5.add(0.2);
+                Assert.assertEquals("Should return Euclidean distance between 2 vectors",2.012461179749811, Algebra.euclideanDistance(v4,v5), 0);
             }
         }
