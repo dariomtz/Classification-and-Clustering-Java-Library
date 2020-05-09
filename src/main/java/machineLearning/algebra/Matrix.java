@@ -6,15 +6,18 @@ public class Matrix {
     protected Vector<Vector<Double>>Matrix;
     protected final int rowSize,colSize;
 
-    public Matrix(int row, int col) throws LessThanMinimumSizeForMatrix, OutOfRangeMatrixPosition,
-            DifferentVectorSizeFound,OutOfRangeMatrixColPosition{
+    public Matrix(int row, int col) throws LessThanMinimumSizeForMatrix{
         if(row <= 0 || col <= 0){
             throw new LessThanMinimumSizeForMatrix(Math.min(row,col));
         }
         this.colSize = col;
         this.rowSize = row;
         Matrix = new Vector<>(col);
-        for (int i = 0; i<col; i++)this.setCol(i, new Vector<>(row));
+        Matrix.setSize(col);
+        for (int i = 0; i<col; i++){
+            Matrix.set(i,new Vector<>(row));
+            Matrix.get(i).setSize(row);
+        }
     }
     public Matrix(Vector<Vector<Double>> vector) throws LessThanMinimumSizeForMatrix, DifferentVectorSizeFound{
         int col = vector.size();
@@ -26,7 +29,7 @@ public class Matrix {
             throw new LessThanMinimumSizeForMatrix(row);
         }
         for(int i = 0; i<col; i++){
-            for(int j = 0; j<row; i++){
+            for(int j = 0; j<row; j++){
                 if(vector.get(i).size() != row){
                     throw new DifferentVectorSizeFound(row,vector.get(i).size());
                 }
@@ -37,10 +40,8 @@ public class Matrix {
         rowSize = vector.get(0).size();
     }
 
-    public Matrix(Matrix matrix){
-        Matrix = (Vector<Vector<Double>>) matrix.Matrix.clone();
-        this.rowSize = matrix.rowSize;
-        this.colSize = matrix.colSize;
+    public Matrix(Matrix matrix) throws Exception{
+        this(matrix.Matrix);
     }
 
     public void set(int row, int col, Double value) throws OutOfRangeMatrixPosition{
@@ -84,6 +85,7 @@ public class Matrix {
             throw new OutOfRangeMatrixRowPosition(row,this.rowSize);
         }
         Vector<Double>vector = new Vector<>(colSize);
+        vector.setSize(colSize);
         for(int i = 0; i < colSize; i++)vector.set(i,get(row,i));
         return vector;
     }
@@ -92,6 +94,7 @@ public class Matrix {
             throw new OutOfRangeMatrixColPosition(col,colSize);
         }
         Vector<Double>vector = new Vector<>(rowSize);
+        vector.setSize(rowSize);
         for(int i = 0; i < rowSize; i++)vector.set(i,get(i,col));
         return vector;
 

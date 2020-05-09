@@ -101,11 +101,12 @@ public class MatrixTest {
         m1.set(0,0,43.8);
         Assert.assertEquals("The value in <0,0> must be 43.8",(Double) 43.8,m1.get(0,0));
 
-        Vector<Double> v1= new Vector<>(4);
-        Collections.addAll(v1,0.0,1.0,2.0,3.0);
+        Vector<Double> v1= new Vector<>(5);
+        Collections.addAll(v1,0.0,1.0,2.0,3.0,4.0);
         m1.setRow(1,v1);
-        Assert.assertEquals("The values in row 1 must be <0,1,2,3>",v1,m1.getRow(1));
+        Assert.assertEquals("The values in row 1 must be <0,1,2,3,4>",v1,m1.getRow(1));
 
+        v1.setSize(4);
         m1.setCol(3,v1);
         Assert.assertEquals("The values in col 3 must be <0,1,2,3>",v1,m1.getCol(3));
 
@@ -246,8 +247,9 @@ public class MatrixTest {
             }
         }
         Matrix m3 = Matrix.subtract(m1,m2);
+        Assert.assertEquals("The subtraction of m1-m2 must be m1",m1.Matrix,m3.Matrix);
         Matrix m4 = Matrix.subtract(m2,m1);
-        Assert.assertEquals("The subtraction of m1-m4 must be m2",m2.Matrix,Matrix.subtract(m1,m4).Matrix);
+        Assert.assertEquals("The subtraction of m2-(m2-m1) must be m1",m1.Matrix,Matrix.subtract(m2,m4).Matrix);
 
         boolean correct = false;
         Matrix m5 = new Matrix(10,10);
