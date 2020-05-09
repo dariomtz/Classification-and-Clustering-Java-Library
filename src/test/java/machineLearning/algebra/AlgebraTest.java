@@ -123,7 +123,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testCrossMethod(){
+    public void testCrossMethod() throws DifferentVectorSizeFound {
         Vector<Integer> v1 = new Vector<>();
         v1.add(5);
         v1.add(3);
@@ -155,7 +155,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testDotMethod(){
+    public void testDotMethod() throws DifferentVectorSizeFound {
         Vector<Integer> v4 = new Vector<>();
         v4.add(0);
         v4.add(1);
@@ -169,7 +169,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testEuclideanDistance(){
+    public void testEuclideanDistance() throws DifferentVectorSizeFound {
         Vector<Integer> v4 = new Vector<>();
         v4.add(0);
         v4.add(1);
