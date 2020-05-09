@@ -96,6 +96,33 @@ public class AlgebraTest {
     }
 
     @Test
+    public void testDivisionMethod() throws DifferentVectorSizeFound {
+        Vector<Integer> v1 = new Vector<>();
+        v1.add(1);
+        v1.add(2);
+        v1.add(3);
+
+        Vector<Double> v2 = new Vector<>();
+        v2.add(2d);
+        v2.add(2d);
+        v2.add(2d);
+
+        Vector<Double> v3 = new Vector<>();
+        v3.add(0.5d);
+        v3.add(1d);
+        v3.add(1.5d);
+
+        Vector<Double> v4 = new Vector<>();
+        v4.add(1d);
+        v4.add(1d);
+        v4.add(1d);
+
+        Assert.assertEquals("Division vector / vector", v3, Algebra.division(v1, v2));
+        Assert.assertEquals("Division vector / double", v3, Algebra.division(v1, 2d));
+        Assert.assertEquals("Division double / vector", v4, Algebra.division(2, v2));
+    }
+
+    @Test
     public void testCrossMethod(){
         Vector<Integer> v1 = new Vector<>();
         v1.add(5);
