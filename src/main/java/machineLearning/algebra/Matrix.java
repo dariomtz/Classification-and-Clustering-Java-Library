@@ -1,5 +1,6 @@
 package machineLearning.algebra;
 
+import java.util.Collections;
 import java.util.Vector;
 
 public class Matrix {
@@ -15,6 +16,17 @@ public class Matrix {
         this.rowSize = row;
         Matrix = new Vector<>(col);
         for (int i = 0; i<col; i++)this.setCol(i, new Vector<>(row));
+    }
+    public Matrix(Vector<Vector<Double>> vector){
+        Matrix = (Vector<Vector<Double>>) vector.clone();
+        colSize = vector.size();
+        rowSize = vector.get(0).size();
+    }
+
+    public Matrix(Matrix matrix){
+        Matrix = (Vector<Vector<Double>>) matrix.Matrix.clone();
+        this.rowSize = matrix.rowSize;
+        this.colSize = matrix.colSize;
     }
 
     public void set(int row, int col, Double value) throws OutOfRangeMatrixPosition{
