@@ -1,6 +1,5 @@
 package machineLearning.algebra;
 
-import machineLearning.Exceptions.DifferentVectorSizeFound;
 import org.junit.Assert;
 import org.junit.Test;
 

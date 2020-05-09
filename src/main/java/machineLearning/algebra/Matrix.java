@@ -1,7 +1,5 @@
 package machineLearning.algebra;
 
-import machineLearning.Exceptions.DifferentVectorSizeFound;
-
 import java.util.Vector;
 
 public class Matrix {
