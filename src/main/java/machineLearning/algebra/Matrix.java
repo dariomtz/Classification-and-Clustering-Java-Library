@@ -76,7 +76,7 @@ public class Matrix {
         return matrix;
     }
 
-    public static Matrix substract(Matrix a, Matrix b) throws DifferentVectorSizeFound {
+    public static Matrix subtract(Matrix a, Matrix b) throws DifferentVectorSizeFound {
         if(a.colSize != b.colSize || a.rowSize != b.rowSize){
         }//RETORNA UNA EXCEPTION
         Matrix matrix = new Matrix(a.rowSize,a.colSize);
