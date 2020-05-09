@@ -6,15 +6,41 @@ public class Matrix {
     protected Vector<Vector<Double>>Matrix;
     protected final int rowSize,colSize;
 
-    public Matrix(int row, int col) throws NegativeSizeForMatrix, OutOfRangeMatrixPosition,
+    public Matrix(int row, int col) throws LessThanMinimumSizeForMatrix, OutOfRangeMatrixPosition,
             DifferentVectorSizeFound,OutOfRangeMatrixColPosition{
         if(row <= 0 || col <= 0){
-            throw new NegativeSizeForMatrix(Math.min(row,col));
+            throw new LessThanMinimumSizeForMatrix(Math.min(row,col));
         }
         this.colSize = col;
         this.rowSize = row;
         Matrix = new Vector<>(col);
         for (int i = 0; i<col; i++)this.setCol(i, new Vector<>(row));
+    }
+    public Matrix(Vector<Vector<Double>> vector) throws LessThanMinimumSizeForMatrix, DifferentVectorSizeFound{
+        int col = vector.size();
+        if(col <=0){
+            throw new LessThanMinimumSizeForMatrix(col);
+        }
+        int row = vector.get(0).size();
+        if(row <=0){
+            throw new LessThanMinimumSizeForMatrix(row);
+        }
+        for(int i = 0; i<col; i++){
+            for(int j = 0; j<row; i++){
+                if(vector.get(i).size() != row){
+                    throw new DifferentVectorSizeFound(row,vector.get(i).size());
+                }
+            }
+        }
+        Matrix = (Vector<Vector<Double>>) vector.clone();
+        colSize = vector.size();
+        rowSize = vector.get(0).size();
+    }
+
+    public Matrix(Matrix matrix){
+        Matrix = (Vector<Vector<Double>>) matrix.Matrix.clone();
+        this.rowSize = matrix.rowSize;
+        this.colSize = matrix.colSize;
     }
 
     public void set(int row, int col, Double value) throws OutOfRangeMatrixPosition{
