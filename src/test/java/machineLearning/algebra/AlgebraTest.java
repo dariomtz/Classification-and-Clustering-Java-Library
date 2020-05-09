@@ -1,5 +1,6 @@
 package machineLearning.algebra;
 
+import machineLearning.Exceptions.DifferentVectorSizeFound;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,10 +18,11 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testSumMethod(){
+    public void testSumMethod() throws DifferentVectorSizeFound {
         Vector<Integer> v1 = new Vector<>();
         v1.add(5);
         v1.add(3);
+
         Vector<Double> v2 = new Vector<>();
         v2.add(3.55);
         v2.add(8.63);
@@ -29,17 +31,16 @@ public class AlgebraTest {
         v3.add(8.55);
         v3.add(11.63);
 
-        Assert.assertEquals("Sum should return the sum of 2 vectors in a new vector",v3,Algebra.sum(v1,v2));
+        Vector<Double> v4 = new Vector<>();
+        v4.add(v2.get(0) + 3.14);
+        v4.add(v2.get(1) + 3.14);
 
-        Vector<Integer> v4 = new Vector<>();
-        v4.add(0);
-        v4.add(1);
-        v4.add(2);
-        Vector<Double> v5 = new Vector<>();
-        v5.add(0.0);
-        v5.add(0.1);
-        v5.add(0.2);
-        Assert.assertEquals(3.0, Algebra.sum(v4), 0);
+        Assert.assertEquals("Sum should return the sum of 2 vectors in a new vector", v3 , Algebra.sum(v1,v2));
+
+        Assert.assertEquals( "The sum of all the internal components of the vector",
+                20.18, Algebra.sum(v3), 0);
+
+        Assert.assertEquals("The sum of a vector and a scalar", v4, Algebra.sum(v2, 3.14));
     }
 
     @Test
