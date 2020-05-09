@@ -118,14 +118,10 @@ public class Matrix {
         return newMatrix;
     }
 
-    public static Matrix inverse(Matrix matrix){
-        Matrix newMatrix = new Matrix(matrix.rowSize,matrix.colSize);
-        for(int i = 0; i<matrix.colSize; i++){
-            for(int j = 0; j<matrix.rowSize; j++){
-                newMatrix.set(j,i,1/matrix.get(j,i));
-            }
-        }
-        return newMatrix;
+    public static Matrix Identity(int size) {
+    Matrix matrix = new Matrix(size,size);
+    for(int i = 0; i<size; i++)matrix.set(i,i,1.0);
+    return matrix;
     }
 
 
