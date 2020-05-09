@@ -44,33 +44,55 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testSubtractVectorMethod(){
+    public void testSubtractVectorMethod() throws DifferentVectorSizeFound {
         Vector<Integer> v1 = new Vector<>();
         v1.add(5);
         v1.add(3);
+
         Vector<Double> v2 = new Vector<>();
         v2.add(3.55);
         v2.add(8.63);
 
         Vector<Double> v3 = new Vector<>();
-        v3.add(1.4500000000000002);
-        v3.add(-5.630000000000001);
+        v3.add(1.45);
+        v3.add(-5.63);
+
+        Vector<Double> v4 = new Vector<>();
+        v4.add(3d);
+        v4.add(8.8d);
+
+        Vector<Double> v5 = new Vector<>();
+        v5.add(-1.45d);
+        v5.add(5.63d);
 
         Assert.assertEquals("Sub should return the subtraction of 2 vectors in a new vector",v3,Algebra.subtract(v1,v2));
+
+        Assert.assertEquals("Subtraction of vector minus double", v4, Algebra.subtract(v2, 0.55d));
+
+        Assert.assertEquals("Subtraction of double minus vector", v5, Algebra.subtract(0d, v3));
     }
 
     @Test
-    public void testMultMethod(){
-        Vector<Integer> v4 = new Vector<>();
-        v4.add(0);
-        v4.add(1);
-        v4.add(2);
-        Vector<Double> v5 = new Vector<>();
-        v5.add(0.0);
-        v5.add(0.1);
-        v5.add(0.2);
+    public void testMultMethod() throws DifferentVectorSizeFound {
 
-        Assert.assertEquals("Should return product of a mult x esc",v5,Algebra.mult(0.1,v4));
+        Vector<Integer> v1 = new Vector<>();
+        v1.add(0);
+        v1.add(1);
+        v1.add(2);
+
+        Vector<Double> v2 = new Vector<>();
+        v2.add(0.0);
+        v2.add(0.1);
+        v2.add(0.2);
+
+        Vector<Double> v3 = new Vector<>();
+        v3.add(0d);
+        v3.add(0.1d);
+        v3.add(0.4d);
+
+        Assert.assertEquals("Should return product of a mult x esc",v2,Algebra.mult(0.1,v1));
+
+        Assert.assertEquals("Multiplication of vector * vector", v3, Algebra.mult(v1,v2));
     }
 
     @Test
