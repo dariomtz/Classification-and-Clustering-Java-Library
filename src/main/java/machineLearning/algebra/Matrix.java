@@ -17,21 +17,25 @@ public class Matrix {
         for (Vector<Double> v: Matrix)v = new Vector<>(row);
     }
 
-    public void set(int row, int col, Double value){
+    public void set(int row, int col, Double value) throws OutOfRangeMatrixPosition{
         if(row >=rowSize || row < 0 || col >=colSize || col < 0){
-        }//REGRESAR UNA EXCEPCION
+            throw new OutOfRangeMatrixPosition(row,col,this.rowSize,this.colSize);
+        }
         Matrix.get(col).set(row,value);
     }
-    public void setRow(int row, Vector<Double>vector){
+    public void setRow(int row, Vector<Double>vector) throws OutOfRangeMatrixPosition,
+            DifferentVectorSizeFound, OutOfRangeMatrixRowPosition{
         if(vector.size() != this.colSize) {
-        }//Return a Exception
+            throw new DifferentVectorSizeFound(vector.size(),this.colSize);
+        }
         if(row >=rowSize || row < 0 ){
-        }//Return a Exception
+            throw  new OutOfRangeMatrixRowPosition(row, this.rowSize);
+        }
         for(int i = 0; i<colSize; i++){
             this.set(row,i,vector.get(i));
         }
     }
-    public void setCol(int col, Vector<Double>vector){
+    public void setCol(int col, Vector<Double>vector) throws OutOfRangeMatrixPosition{
         if(vector.size() != this.rowSize) {
         }//Return a Exception
         if(col >=colSize || col < 0 ){
