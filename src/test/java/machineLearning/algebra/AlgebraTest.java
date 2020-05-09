@@ -59,13 +59,17 @@ public class AlgebraTest {
 
         Vector<Double> v4 = new Vector<>();
         v4.add(3d);
-        v4.add(8.8d);
+        v4.add(8.08d);
 
         Vector<Double> v5 = new Vector<>();
         v5.add(-1.45d);
         v5.add(5.63d);
 
-        Assert.assertEquals("Sub should return the subtraction of 2 vectors in a new vector",v3,Algebra.subtract(v1,v2));
+        Vector<Double> v6 = Algebra.subtract(v1, v2);
+
+        for (int i = 0; i < v6.size(); i++) {
+            Assert.assertEquals("Subtraction of vector minus vector", v3.get(i), v6.get(i),0.001d);
+        }
 
         Assert.assertEquals("Subtraction of vector minus double", v4, Algebra.subtract(v2, 0.55d));
 
