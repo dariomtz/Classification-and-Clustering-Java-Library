@@ -6,13 +6,15 @@ public class Matrix {
     protected Vector<Vector<Double>>Matrix;
     protected final int rowSize,colSize;
 
-    public Matrix(int row, int col){
+    public Matrix(int row, int col) throws NegativeSizeForMatrix, OutOfRangeMatrixPosition,
+            DifferentVectorSizeFound,OutOfRangeMatrixColPosition{
         if(row <= 0 || col <= 0){
-        }//Regresar UNA EXCEPTION
+            throw new NegativeSizeForMatrix(Math.min(row,col));
+        }
         this.colSize = col;
         this.rowSize = row;
         Matrix = new Vector<>(col);
-        for (Vector<Double> v: Matrix)v = new Vector<>(row);
+        for (int i = 0; i<col; i++)this.setCol(i, new Vector<>(row));
     }
 
     public void set(int row, int col, Double value) throws OutOfRangeMatrixPosition{
@@ -33,40 +35,47 @@ public class Matrix {
             this.set(row,i,vector.get(i));
         }
     }
-    public void setCol(int col, Vector<Double>vector) throws OutOfRangeMatrixPosition{
+    public void setCol(int col, Vector<Double>vector) throws OutOfRangeMatrixPosition,
+            DifferentVectorSizeFound,OutOfRangeMatrixColPosition{
         if(vector.size() != this.rowSize) {
-        }//Return a Exception
+            throw new DifferentVectorSizeFound(vector.size(),this.rowSize);
+        }
         if(col >=colSize || col < 0 ){
-        }//Return a Exception
+            throw new  OutOfRangeMatrixColPosition(col,this.colSize);
+        }
         for(int i = 0; i<rowSize; i++){
             this.set(i,col,vector.get(i));
         }
     }
-    public Double get(int row,int col){
+    public Double get(int row,int col) throws OutOfRangeMatrixPosition{
         if(row >=rowSize || row < 0 || col >=colSize || col < 0){
-        }//REGRESAR UNA EXCEPCION
+            throw new OutOfRangeMatrixPosition(row,col,this.rowSize,this.colSize);
+        }
         return this.Matrix.get(col).get(row);
     }
-    public Vector<Double> getRow(int row){
+    public Vector<Double> getRow(int row) throws OutOfRangeMatrixRowPosition,OutOfRangeMatrixPosition{
         if(row >=rowSize || row < 0 ){
-        }//Return a Exception
+            throw new OutOfRangeMatrixRowPosition(row,this.rowSize);
+        }
         Vector<Double>vector = new Vector<>(colSize);
         for(int i = 0; i < colSize; i++)vector.set(i,get(row,i));
         return vector;
     }
-    public Vector<Double> getCol(int col){
-        if(col >=rowSize || col < 0 ){
-        }//Return a Exception
+    public Vector<Double> getCol(int col) throws OutOfRangeMatrixColPosition, OutOfRangeMatrixPosition{
+        if(col >=colSize || col < 0 ){
+            throw new OutOfRangeMatrixColPosition(col,colSize);
+        }
         Vector<Double>vector = new Vector<>(rowSize);
         for(int i = 0; i < rowSize; i++)vector.set(i,get(i,col));
         return vector;
 
     }
-    public static Matrix sum(Matrix... matrices){
+    public static Matrix sum(Matrix... matrices) throws Exception{
         int row = matrices[0].rowSize;
         int col = matrices[0].colSize;
         for(Matrix m : matrices)if(m.rowSize != row || m.colSize != col){
-        }//RETORNAR UNA EXCEPTION
+            throw new DifferentMatrixSizeFound(row,col,m.rowSize,m.rowSize);
+        }
         Matrix matrix = new Matrix(row,col);
         for(int i = 0; i<col; i++) {
             for (int j = 0; j < row; j++) {
@@ -78,8 +87,9 @@ public class Matrix {
         return matrix;
     }
 
-    public static Matrix subtract(Matrix a, Matrix b) throws DifferentVectorSizeFound {
+    public static Matrix subtract(Matrix a, Matrix b) throws Exception {
         if(a.colSize != b.colSize || a.rowSize != b.rowSize){
+            throw new DifferentMatrixSizeFound(a.rowSize,a.colSize,b.rowSize,b.colSize);
         }//RETORNA UNA EXCEPTION
         Matrix matrix = new Matrix(a.rowSize,a.colSize);
         for(int i = 0; i<a.colSize; i++) {
@@ -88,9 +98,10 @@ public class Matrix {
         return matrix;
     }
 
-    public static Matrix multiplication(Matrix a, Matrix b) throws DifferentVectorSizeFound {
+    public static Matrix multiplication(Matrix a, Matrix b) throws Exception {
         if(a.colSize != b.rowSize){
-        }//Retorna una exception
+            throw new IncompatibleMatrixSizeOperation(a.colSize,b.rowSize);
+        }
         Matrix matrix = new Matrix(a.rowSize,b.colSize);
         for(int i = 0; i <matrix.colSize; i++){
             for(int j = 0; j < matrix.rowSize; j++) {
@@ -99,22 +110,23 @@ public class Matrix {
         }
         return matrix;
     }
-    public static Matrix multiplication(Matrix matrix, Double scale){
+    public static Matrix multiplication(Matrix matrix, Double scale) throws Exception{
         Matrix newMatrix = new Matrix(matrix.rowSize,matrix.colSize);
         for(int i = 0; i<matrix.colSize; i++){
             matrix.setCol(i,Algebra.mult(scale,matrix.getCol(i)));
         }
         return newMatrix;
     }
-    public static Vector<Double> multiplication(Matrix matrix, Vector<Double> vector) throws DifferentVectorSizeFound {
+    public static Vector<Double> multiplication(Matrix matrix, Vector<Double> vector) throws Exception {
         if(vector.size() != matrix.rowSize){
-        } //Return a Exception
+            throw new DifferentVectorSizeFound(vector.size(),matrix.rowSize);
+        }
         Matrix newMatrix = new Matrix(vector.size(),1);
         newMatrix.setCol(0,vector);
         return multiplication(matrix,newMatrix).getCol(0);
     }
 
-    public static Matrix transpose(Matrix matrix){
+    public static Matrix transpose(Matrix matrix) throws Exception{
         Matrix newMatrix = new Matrix(matrix.colSize,matrix.rowSize);
         for(int i = 0; i<newMatrix.colSize; i++){
             newMatrix.setCol(i,matrix.getRow(i));
@@ -122,7 +134,7 @@ public class Matrix {
         return newMatrix;
     }
 
-    public static Matrix Identity(int size) {
+    public static Matrix Identity(int size) throws Exception{
     Matrix matrix = new Matrix(size,size);
     for(int i = 0; i<size; i++)matrix.set(i,i,1.0);
     return matrix;
