@@ -261,4 +261,110 @@ public class MatrixTest {
         }
         Assert.assertTrue("The DifferentMatrixSizeFound is showed in subtract",correct);
     }
+
+    @Test
+    public void testMultiplicationMethods() throws Exception{
+        //scalar multiplication
+        Matrix m1 = new Matrix(4,5);
+        Matrix m2 = new Matrix(m1);
+        double a = 0;
+        for(int i = 0; i<m1.rowSize; i++){
+            for(int j = 0; j<m1.colSize;j++){
+                m1.set(i,j,a);
+                m2.set(i,j,a);
+                a++;
+            }
+        }
+        Assert.assertEquals("(m1)*2 must be equals to m2",m2,Matrix.multiplication(m1,1.0));
+
+        m1 = new Matrix(2,3);
+        m2 = new Matrix(3,2);
+        Vector<Double>v1 = new Vector<>();
+        Collections.addAll(v1,1.0,2.0,3.0);
+        m1.setRow(0,v1);
+        v1 = new Vector<>();
+        Collections.addAll(v1,4.0,5.0,6.0);
+        m1.setRow(1,v1);
+        v1 = new Vector<>();
+        Collections.addAll(v1,3.0,5.0,7.0);
+        m2.setCol(0,v1);
+        v1 = new Vector<>();
+        Collections.addAll(v1,4.0,6.0,8.0);
+        m2.setCol(1,v1);
+        Matrix m3 = Matrix.multiplication(m1,m2);
+        Matrix m3R = new Matrix(2,2);
+        m3R.set(0,0,34.0);
+        m3R.set(0,1,40.0);
+        m3R.set(1,0,79.0);
+        m3R.set(1,1,94.0);
+        Assert.assertEquals("m1*m2 must be equals to m3R",m3R,m3);
+        Matrix m4 = Matrix.multiplication(m2,m1);
+        Matrix m4R = new Matrix(3,3);
+        v1 = new Vector<>();
+        Collections.addAll(v1,19.0,26.0,33.0);
+        m4R.setRow(0,v1);
+        v1 = new Vector<>();
+        Collections.addAll(v1,29.0,40.0,51.0);
+        m4R.setRow(1,v1);
+        v1 = new Vector<>();
+        Collections.addAll(v1,39.0,54.0,69.0);
+        m4R.setRow(2,v1);
+        Assert.assertEquals("m2*m1 must be equals to m4R",m4R,m4);
+
+        m1 = new Matrix(3,3);
+        v1 = new Vector<>();
+        Collections.addAll(v1,3.0,4.0,5.0);
+        m1.setRow(0,v1);
+        v1 = new Vector<>();
+        Collections.addAll(v1,1.0,2.0,3.0);
+        m1.setRow(1,v1);
+        v1 = new Vector<>();
+        Collections.addAll(v1,6.0,5.0,4.0);
+        m1.setRow(2,v1);
+        v1 = new Vector<>();
+        Collections.addAll(v1,4.0,3.0,2.0);
+        Vector<Double>v2 = new Vector<>();
+        Collections.addAll(v2,34.0,16.0,47.0);
+        Assert.assertEquals("The resultant vec of m1*v must be <34,16,47>",v2,Matrix.multiplication(m1,v1));
+
+        //IncompatibleMatrixSizeOperation Exception
+        boolean correct = false;
+        m1 = new Matrix(3,4);
+        try{
+            Matrix.multiplication(m1,m1);
+        } catch (Exception ex){
+            if(ex instanceof IncompatibleMatrixSizeOperation)
+                correct=true;
+        }
+        Assert.assertTrue("The IncompatibleMatrixSizeOperation Exception must be showed",correct);
+
+        //DifferentVectorSizeFound Exception
+        correct = false;
+        v1.setSize(30);
+        try{
+            Matrix.multiplication(m1,v1);
+        }catch (Exception ex){
+            if(ex instanceof DifferentVectorSizeFound)
+                correct = true;
+        }
+        Assert.assertTrue("The DifferentVectorSizeFound Exception must be showed",correct);
+    }
+    @Test
+    public void testTransposeMethod() throws Exception{
+        Matrix m1 = new Matrix(3,4);
+        Matrix m2 = new Matrix(4,3);
+        Vector<Double> v1;
+        double a = 1;
+        for(int i = 0;i<m1.rowSize;i++){
+            v1 = new Vector<>();
+            for(int j = 0; j<m1.colSize;j++){
+                v1.add(a);
+                a++;
+            }
+            m1.setRow(i,v1);
+            m2.setCol(i,v1);
+        }
+        Assert.assertEquals("The transposed m1 must be equal to m2",m2,Matrix.transpose(m1));
+
+    }
 }

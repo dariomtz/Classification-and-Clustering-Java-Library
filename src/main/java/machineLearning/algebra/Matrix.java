@@ -6,7 +6,7 @@ public class Matrix {
     protected Vector<Vector<Double>>Matrix;
     protected final int rowSize,colSize;
 
-    public Matrix(int row, int col) throws LessThanMinimumSizeForMatrix{
+    public Matrix(int row, int col) throws Exception{
         if(row <= 0 || col <= 0){
             throw new LessThanMinimumSizeForMatrix(Math.min(row,col));
         }
@@ -17,6 +17,11 @@ public class Matrix {
         for (int i = 0; i<col; i++){
             Matrix.set(i,new Vector<>(row));
             Matrix.get(i).setSize(row);
+        }
+        for(int i = 0; i<row; i++){
+            for(int j = 0; j<col; j++){
+                set(i,j,0.0);
+            }
         }
     }
     public Matrix(Vector<Vector<Double>> vector) throws LessThanMinimumSizeForMatrix, DifferentVectorSizeFound{
@@ -134,15 +139,15 @@ public class Matrix {
         Matrix matrix = new Matrix(a.rowSize,b.colSize);
         for(int i = 0; i <matrix.colSize; i++){
             for(int j = 0; j < matrix.rowSize; j++) {
-                matrix.set(j,i,Algebra.sum(Algebra.mult(a.getRow(i),b.getCol(i))));
+                matrix.set(j,i,Algebra.sum(Algebra.mult(a.getRow(j),b.getCol(i))));
             }
         }
         return matrix;
     }
     public static Matrix multiplication(Matrix matrix, Double scale) throws Exception{
-        Matrix newMatrix = new Matrix(matrix.rowSize,matrix.colSize);
+        Matrix newMatrix = new Matrix(matrix);
         for(int i = 0; i<matrix.colSize; i++){
-            matrix.setCol(i,Algebra.mult(scale,matrix.getCol(i)));
+            newMatrix.setCol(i,Algebra.mult(scale,matrix.getCol(i)));
         }
         return newMatrix;
     }
@@ -169,6 +174,30 @@ public class Matrix {
     return matrix;
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Matrix)) return false;
+        Matrix matrix = (Matrix) o;
+        return rowSize == matrix.rowSize &&
+                colSize == matrix.colSize &&
+                Matrix.equals(matrix.Matrix);
+    }
+    @Override
+    public String toString(){
+        String s = "[";
+        for(int i = 0; i<rowSize; i++){
+            s += "[";
+            for(int j = 0; j<colSize; j++){
+                try{
+                    s+= get(i,j)+" ";
+                }catch (Exception ex){
+                }
+            }
+            s+="] ";
+        }
+        s+="]";
+        return s;
+    }
 }
 
