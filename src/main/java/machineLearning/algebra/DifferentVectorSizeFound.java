@@ -1,4 +1,4 @@
-package machineLearning.Exceptions;
+package machineLearning.algebra;
 
 public class DifferentVectorSizeFound extends Exception{
     protected int sizeA;
