@@ -22,11 +22,11 @@ public class MatrixTest {
         Assert.assertEquals("The colSize must be the same than in matrix",m1.colSize,m2.colSize);
 
         //Vector constructor
-        Vector<Vector<Double>>v1 = new Vector<>(6);
-        v1.setSize(6);
+        Vector<Vector<Double>>v1 = new Vector<>(40);
+        v1.setSize(40);
         for(int i = 0; i < v1.size(); i++){
-            v1.set(i,new Vector<>(40));
-            v1.get(i).setSize(40);
+            v1.set(i,new Vector<>(6));
+            v1.get(i).setSize(6);
         }
         Matrix m3 = new Matrix(v1);
         Assert.assertEquals("The rowSize must be 40",40,m3.rowSize);
