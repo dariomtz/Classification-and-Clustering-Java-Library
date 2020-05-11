@@ -1,6 +1,6 @@
 package machineLearning.models;
 
 public interface Model {
-    void train();
+    void train() throws Exception;
     
 }

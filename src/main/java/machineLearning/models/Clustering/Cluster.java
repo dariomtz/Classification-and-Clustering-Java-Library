@@ -4,7 +4,8 @@ import java.util.Objects;
 import java.util.Vector;
 
 public class Cluster {
-    Vector<Double> center;
+    protected Vector<Double> center;
+
     Cluster(Vector<Double>center){
         this.center = center;
     }
@@ -15,6 +16,14 @@ public class Cluster {
         if (o == null || getClass() != o.getClass()) return false;
         Cluster cluster = (Cluster) o;
         return Objects.equals(center, cluster.center);
+    }
+
+    public void setCenter(Vector<Double> center) {
+        this.center = (Vector<Double>) center.clone();
+    }
+
+    public Vector<Double> getCenter() {
+        return center;
     }
 
     @Override

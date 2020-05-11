@@ -9,11 +9,12 @@ import java.util.Vector;
 public abstract class Clustering implements Model {
     Matrix train;
     List<Cluster> clusters;
+    Vector<Double> classified;
 
 
     public Clustering(Matrix train){
         this.train= train;
     }
 
-    public abstract Vector<Double> test(Matrix tests);
+    abstract public  Vector<Double> test(Matrix tests);
 }
