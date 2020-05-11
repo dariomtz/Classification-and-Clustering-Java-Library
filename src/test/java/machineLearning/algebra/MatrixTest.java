@@ -40,7 +40,7 @@ public class MatrixTest {
             m4 = new Matrix(0,3);
         }catch (Exception ex){
             m4 = null;
-            if(ex instanceof LessThanMinimumSizeForMatrix)
+            if(ex instanceof IllegalArgumentException)
                 correct = true;
         }
         Assert.assertTrue("The LessThanMinimumSizeForMatrix Exception caused by row value",correct);
@@ -50,7 +50,7 @@ public class MatrixTest {
             m4 = new Matrix(3,-1);
         }catch (Exception ex){
             m4 = null;
-            if(ex instanceof LessThanMinimumSizeForMatrix)
+            if(ex instanceof IllegalArgumentException)
                 correct = true;
         }
         Assert.assertTrue("The LessThanMinimumSizeForMatrix Exception caused by col value",correct);
@@ -62,7 +62,7 @@ public class MatrixTest {
             m4 = new Matrix(v2);
         }catch (Exception ex){
             m4 = null;
-            if(ex instanceof LessThanMinimumSizeForMatrix)
+            if(ex instanceof IllegalArgumentException)
                 correct = true;
         }
         Assert.assertTrue("The LessThanMinimumSizeForMatrix Exception caused by empty vector col value",correct);
@@ -73,7 +73,7 @@ public class MatrixTest {
             m4 = new Matrix(v2);
         }catch (Exception ex){
             m4 = null;
-            if(ex instanceof LessThanMinimumSizeForMatrix)
+            if(ex instanceof IllegalArgumentException)
                 correct = true;
         }
         Assert.assertTrue("The LessThanMinimumSizeForMatrix Exception caused by empty vector row value",correct);
@@ -115,7 +115,7 @@ public class MatrixTest {
         try{
             m1.set(5,0,4440.444);
         }catch (Exception ex){
-            if(ex instanceof OutOfRangeMatrixPosition)
+            if(ex instanceof IndexOutOfBoundsException)
                 correct = true;
         }
         Assert.assertTrue("The OutOfRangeMatrixPosition is showed in set for row access",correct);
@@ -124,7 +124,7 @@ public class MatrixTest {
         try{
             m1.set(0,10,40.4);
         }catch (Exception ex){
-            if(ex instanceof OutOfRangeMatrixPosition)
+            if(ex instanceof IndexOutOfBoundsException)
                 correct = true;
         }
         Assert.assertTrue("The OutOfRangeMatrixPosition is showed in set for col access",correct);
@@ -133,7 +133,7 @@ public class MatrixTest {
         try{
             m1.get(5,0);
         }catch (Exception ex){
-            if(ex instanceof OutOfRangeMatrixPosition)
+            if(ex instanceof IndexOutOfBoundsException)
                 correct = true;
         }
         Assert.assertTrue("The OutOfRangeMatrixPosition is showed in get for row access",correct);
@@ -142,7 +142,7 @@ public class MatrixTest {
         try{
             m1.get(0,10);
         }catch (Exception ex){
-            if(ex instanceof OutOfRangeMatrixPosition)
+            if(ex instanceof IndexOutOfBoundsException)
                 correct = true;
         }
         Assert.assertTrue("The OutOfRangeMatrixPosition is showed in get for col access",correct);
@@ -173,7 +173,7 @@ public class MatrixTest {
         try{
             m1.setRow(27,v1);
         }catch (Exception ex){
-            if(ex instanceof OutOfRangeMatrixRowPosition)
+            if(ex instanceof IndexOutOfBoundsException)
                 correct = true;
         }
         Assert.assertTrue("The OutOfRangeMatrixRowPosition is showed in setRow",correct);
@@ -183,7 +183,7 @@ public class MatrixTest {
         try{
             m1.setCol(459,v1);
         }catch (Exception ex){
-            if(ex instanceof OutOfRangeMatrixColPosition)
+            if(ex instanceof IndexOutOfBoundsException)
                 correct = true;
         }
         Assert.assertTrue("The OutOfRangeMatrixColPosition is showed in setCol",correct);
@@ -192,7 +192,7 @@ public class MatrixTest {
         try{
             m1.getRow(27);
         }catch (Exception ex){
-            if(ex instanceof OutOfRangeMatrixRowPosition)
+            if(ex instanceof IndexOutOfBoundsException)
                 correct = true;
         }
         Assert.assertTrue("The OutOfRangeMatrixColPosition is showed in getRow",correct);
@@ -201,7 +201,7 @@ public class MatrixTest {
         try{
             m1.getCol(459);
         }catch (Exception ex){
-            if(ex instanceof OutOfRangeMatrixColPosition)
+            if(ex instanceof IndexOutOfBoundsException)
                 correct = true;
         }
         Assert.assertTrue("The OutOfRangeMatrixColPosition is showed in getCol",correct);

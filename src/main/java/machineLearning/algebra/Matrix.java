@@ -102,7 +102,7 @@ public class Matrix {
         return vector;
     }
     public Vector<Double> getCol(int col){
-        if(col >=rowSize || col < 0 ){
+        if(col >=colSize || col < 0 ){
             throw  new IndexOutOfBoundsException("index out of range in col: " + col);
         }
         Vector<Double>vector = new Vector<>(rowSize);
