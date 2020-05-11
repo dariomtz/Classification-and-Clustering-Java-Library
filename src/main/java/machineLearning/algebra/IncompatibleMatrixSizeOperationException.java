@@ -1,8 +1,8 @@
 package machineLearning.algebra;
 
-public class IncompatibleMatrixSizeOperation extends Exception {
+public class IncompatibleMatrixSizeOperationException extends Exception {
     int col,row;
-    IncompatibleMatrixSizeOperation(int col,int row){
+    IncompatibleMatrixSizeOperationException(int col, int row){
         super("IncompatibleMatrixSizeOperation");
         this.col = col;
         this.row = row;
