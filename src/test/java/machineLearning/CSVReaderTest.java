@@ -16,7 +16,7 @@ public class CSVReaderTest {
 
         Assert.assertTrue("The constructor works properly", true);
 
-        System.out.println("inputs");
+        //System.out.println("inputs");
         for (int i = 0; i < in.size(); i++) {
             for (int j = 0; j < in.get(i).size(); j++) {
                 double d = Double.parseDouble(in.get(i).get(j));
@@ -26,7 +26,7 @@ public class CSVReaderTest {
             //System.out.println();
         }
 
-        System.out.println("outputs");
+        //System.out.println("outputs");
         for (int i = 0; i < out.size(); i++) {
             for (int j = 0; j < out.get(i).size(); j++) {
                 double d = Double.parseDouble(out.get(i).get(j));
