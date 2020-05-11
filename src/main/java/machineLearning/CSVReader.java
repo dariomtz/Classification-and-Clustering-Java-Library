@@ -19,6 +19,8 @@ public class CSVReader {
         outputs = new Vector<>();
 
         Scanner csv = new Scanner(new FileReader(fileName));
+        csv.nextLine();
+
         int i = 0;
         while (csv.hasNextLine()){
             inputs.add(new Vector<>());
@@ -29,7 +31,7 @@ public class CSVReader {
             for (int j = firstColumnOfInputs; j < firstColumnOfOutputs; j++)
                 inputs.get(i).add(line[j]);
 
-            for (int j = firstColumnOfInputs; j <= lastColumnOfOutputs; j++)
+            for (int j = firstColumnOfOutputs; j <= lastColumnOfOutputs; j++)
                 outputs.get(i).add(line[j]);
 
             i++;
