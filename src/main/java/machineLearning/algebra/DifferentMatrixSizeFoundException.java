@@ -1,6 +1,6 @@
 package machineLearning.algebra;
 
-public class DifferentMatrixSizeFoundException extends Exception{
+public class DifferentMatrixSizeFoundException extends RuntimeException{
     int aRow,aCol,bRow,bCol;
     public DifferentMatrixSizeFoundException(int aRow, int aCol, int bRow, int bCol){
         super("DifferentMatrixSizeFound");

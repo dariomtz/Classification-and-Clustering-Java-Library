@@ -1,6 +1,6 @@
 package machineLearning.algebra;
 
-public class DifferentVectorSizeFound extends Exception{
+public class DifferentVectorSizeFound extends RuntimeException{
     protected int sizeA;
     protected int sizeB;
 
