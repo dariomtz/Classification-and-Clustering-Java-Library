@@ -228,7 +228,7 @@ public class MatrixTest {
         try{
             Matrix.sum(m1,m2,m2,m4,m2);
         }catch (Exception ex){
-            if(ex instanceof DifferentMatrixSizeFound)
+            if(ex instanceof DifferentMatrixSizeFoundException)
                 correct =true;
         }
         Assert.assertTrue("The DifferentMatrixSizeFound is showed in sum",correct);
@@ -256,7 +256,7 @@ public class MatrixTest {
         try{
             Matrix.subtract(m1,m5);
         }catch (Exception ex){
-            if(ex instanceof DifferentMatrixSizeFound)
+            if(ex instanceof DifferentMatrixSizeFoundException)
                 correct =true;
         }
         Assert.assertTrue("The DifferentMatrixSizeFound is showed in subtract",correct);
@@ -333,7 +333,7 @@ public class MatrixTest {
         try{
             Matrix.multiplication(m1,m1);
         } catch (Exception ex){
-            if(ex instanceof IncompatibleMatrixSizeOperation)
+            if(ex instanceof IncompatibleMatrixSizeOperationException)
                 correct=true;
         }
         Assert.assertTrue("The IncompatibleMatrixSizeOperation Exception must be showed",correct);
