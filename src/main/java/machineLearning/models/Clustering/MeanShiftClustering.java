@@ -4,7 +4,6 @@ import machineLearning.algebra.Algebra;
 import machineLearning.algebra.Matrix;
 
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -13,76 +12,103 @@ public class MeanShiftClustering extends Clustering {
     double radius;
 
 
-    MeanShiftClustering(Matrix train, double radius){
-        super(train);
+    MeanShiftClustering(Matrix data, double radius){
+        super(data);
+        setRadius(radius);
+    }
+
+    public void setRadius(double radius) {
+        if(radius<=0)throw new IllegalArgumentException("illegal radius: "+radius);
         this.radius = radius;
     }
 
-    @Override
-    public void train() throws Exception{
+    public double getRadius() {
+        return radius;
+    }
 
-        //Create all the initial clusters
-        ConcurrentLinkedQueue<Cluster> clusters = new ConcurrentLinkedQueue<>();
-        for(int i = 0; i<train.rowSize;i++){
-            Cluster cluster = new Cluster(train.getRow(i));
+    @Override
+    public void train(){
+
+        //Create all the initial groups
+        ConcurrentLinkedQueue<Vector<Double>> clusters = new ConcurrentLinkedQueue<>();
+        for(int i = 0; i<data.rowSize;i++){
+            Vector<Double> group = new Vector<Double>(data.getRow(i));
             boolean inside = false;
-            for(Cluster cluster2: clusters){
-                if(Algebra.euclideanDistance(cluster.getCenter(),cluster2.getCenter())<=radius){
+            for(Vector<Double> cluster2: clusters){
+                if(Algebra.euclideanDistance(group,cluster2)<=radius){
                     inside = true;
                     break;
                 }
             }
-            if(!inside)clusters.add(cluster);
+            if(!inside)clusters.add(group);
         }
 
-        //Converged all the clusters
-        LinkedList<Cluster> convergedClusters = new LinkedList<>();
+        //Converged all the groups
+        LinkedList<Vector<Double>> convergedClusters = new LinkedList<>();
         while(!clusters.isEmpty()){
-            Cluster cluster = clusters.poll();
+            Vector<Double> group = clusters.poll();
             boolean change;
             do{
                 change = false;
                 int points = 0;
-                Vector<Double> centerPoint = new Vector<>(train.colSize);
-                for(int i = 0; i<train.colSize; i++)centerPoint.add(0.0);
-                for(int i = 0; i<train.rowSize; i++){
-                    if(Algebra.euclideanDistance(cluster.getCenter(),train.getRow(i))<=radius){
-                        centerPoint = Algebra.sum(centerPoint,train.getRow(i));
+                Vector<Double> centerPoint = new Vector<>(data.colSize);
+                for(int i = 0; i<data.colSize; i++)centerPoint.add(0.0);
+                for(int i = 0; i<data.rowSize; i++){
+                    if(Algebra.euclideanDistance(group,data.getRow(i))<=radius){
+                        centerPoint = Algebra.sum(centerPoint,data.getRow(i));
                         points ++;
                     }
                 }
                 centerPoint = Algebra.division(centerPoint,points);
-                if(!centerPoint.equals(cluster.center)){
-                    cluster.setCenter(centerPoint);
+                if(!centerPoint.equals(group)){
+                    group = centerPoint;
                     change = true;
                 }
             }while (change);
-            convergedClusters.add(cluster);
+            convergedClusters.add(group);
         }
-        LinkedList<Cluster> finalClusters = new LinkedList<>();
+        LinkedList<Vector<Double>> finalClusters = new LinkedList<>();
 
-        //remove repeated clusters
+        //remove repeated groups
         while(!convergedClusters.isEmpty()){
-            Cluster cluster = convergedClusters.poll();
-            finalClusters.add(cluster);
-            LinkedList<Cluster> remove = new LinkedList<>();
+            Vector<Double> group = convergedClusters.poll();
+            finalClusters.add(group);
+            LinkedList<Vector<Double>> remove = new LinkedList<>();
             for(int i = 0; i<convergedClusters.size();i++){
-                if(Algebra.euclideanDistance(cluster.getCenter(),convergedClusters.get(i).getCenter())<=radius){
+                if(Algebra.euclideanDistance(group,convergedClusters.get(i))<=radius){
                     remove.add(convergedClusters.get(i));
                 }
             }
             for(int i = 0; i<remove.size(); i++)convergedClusters.remove(remove.get(i));
         }
 
-        this.clusters = finalClusters;
-        this.classified = test(this.train);
+        setGroups(finalClusters);
+        Matrix classificated = classify(this.data);
+        Vector<Integer>classified = new Vector<>();
+        for(int i = 0; i<data.rowSize; i++) classified.add(groups.indexOf(classificated.getRow(i)));
+        setClassified(classified);
+    }
+    @Override
+    public Matrix classify(Matrix input) {
+        Matrix output = new Matrix(input);
+        for(int i = 0; i<output.rowSize; i++) output.setRow(i,classify(input.getRow(i)));
+        return output;
     }
 
     @Override
-    public Vector<Double> test(Matrix tests) {
-        for(int i = 0; i<tests.rowSize; i++){
-
+    public Vector<Double> classify(Vector<Double> input) {
+        Vector<Double> closest= groups.get(0);
+        double close = Algebra.euclideanDistance(input,closest);
+        for(Vector<Double> group: groups){
+            double distance = Algebra.euclideanDistance(input,group);
+            if(distance<close){
+                close = distance;
+                closest = group;
+            }
         }
-        return null;
+        return closest;
     }
+
+
+
 }

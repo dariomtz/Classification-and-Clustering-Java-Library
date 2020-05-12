@@ -9,7 +9,7 @@ import java.util.Vector;
 public class CSVReaderTest {
     @Test
     public void createCSVReaderTest() throws FileNotFoundException {
-        CSVReader reader = new CSVReader("/Users/gusdamtzr/OneDrive - ITESO/Programming/Java/Machine Learning Java API/src/test/resources/zoo.csv", 1, 17, 17);
+        CSVReader reader = new CSVReader("src/test/resources/zoo.csv", 1, 17, 17);
 
         Vector<Vector<String>> in = reader.getInputs();
         Vector<Vector<String>> out = reader.getOutputs();
