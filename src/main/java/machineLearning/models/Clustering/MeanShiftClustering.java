@@ -5,16 +5,27 @@ import machineLearning.algebra.Matrix;
 
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MeanShiftClustering extends Clustering {
+    protected List<Vector<Double>> groups;
     double radius;
 
 
     MeanShiftClustering(Matrix data, double radius){
         super(data);
         setRadius(radius);
+        train();
+    }
+
+    protected void setGroups(List<Vector<Double>> groups) {
+        this.groups = groups;
+    }
+
+    public List<Vector<Double>> getGroups() {
+        return groups;
     }
 
     public void setRadius(double radius) {
