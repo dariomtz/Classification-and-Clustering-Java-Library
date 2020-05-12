@@ -22,7 +22,7 @@ public class MeanShiftClusteringTest {
         }
         Assert.assertTrue("The IllegalArgumentException must be thrown",correct);
     }
-
+    @Test
     public void testTrainingMethod(){
         Matrix matrix = new Matrix(50,3);
         for(int i = 0; i<25; i++){
@@ -35,6 +35,7 @@ public class MeanShiftClusteringTest {
                 matrix.set(i,j,new Random().nextDouble()+50);
             }
         }
+
         MeanShiftClustering clustering = new MeanShiftClustering(matrix,0.5);
         clustering.train();
         for(int i = 0; i<clustering.groups.size(); i++) System.out.println(i+") "+clustering.groups.get(i));
