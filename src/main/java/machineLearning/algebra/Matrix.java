@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class Matrix {
     protected Vector<Vector<Double>>Matrix;
-    protected final int rowSize,colSize;
+    public final int rowSize,colSize;
 
     public Matrix(int row, int col){
         if(row <= 0){
