@@ -3,18 +3,19 @@ package machineLearning.models.neuralNetworks;
 import machineLearning.algebra.Matrix;
 import machineLearning.models.SupervisedModel;
 
+import java.util.Random;
 import java.util.Vector;
 
 public class SimpleNeuralNetwork extends SupervisedModel {
     protected int layers = 1;
-    protected Matrix synapticWeights;
-    protected Matrix bias;
+    protected Matrix[] synapticWeights;
+    protected double bias = 0;
     protected ActivationFunction activationFunction = ActivationFunction.LEAKY_RELU;
 
     public SimpleNeuralNetwork(Vector<Vector<Double>> inputs,
                                Vector<Vector<Double>> outputs){
         super(inputs, outputs);
-        
+
         train();
     }
 
@@ -88,16 +89,21 @@ public class SimpleNeuralNetwork extends SupervisedModel {
     }
 
     protected void initializeSynapticWeights() {
+        synapticWeights = new Matrix[layers];
+        Random r = new Random();
+        for (int i = 0; i < layers; i++){
+            synapticWeights[i] = new Matrix(inputs.getRowSize(), inputs.getColSize());
 
-    }
-
-    protected void initializeBias(){
-
+            for (int j = 0; j < synapticWeights[i].getRowSize(); j++){
+                for (int k = 0; k < synapticWeights[i].getColSize(); k++){
+                    synapticWeights[i].set(j , k, r.nextDouble());
+                }
+            }
+        }
     }
 
     @Override
     public void train() {
-        initializeBias();
         initializeSynapticWeights();
 
     }

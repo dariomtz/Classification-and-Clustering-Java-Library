@@ -61,6 +61,15 @@ public class Matrix {
         }
         Matrix.get(row).set(col,value);
     }
+
+    public int getRowSize() {
+        return rowSize;
+    }
+
+    public int getColSize() {
+        return colSize;
+    }
+
     public void setRow(int row, Vector<Double>vector) throws DifferentVectorSizeFound{
         if(vector.size() != this.colSize) {
             throw new DifferentVectorSizeFound(vector.size(),this.colSize);

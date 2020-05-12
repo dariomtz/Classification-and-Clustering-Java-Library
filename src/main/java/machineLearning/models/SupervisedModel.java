@@ -5,8 +5,8 @@ import machineLearning.algebra.Matrix;
 import java.util.Vector;
 
 public abstract class SupervisedModel implements Model {
-    Matrix inputs;
-    Matrix outputs;
+    protected Matrix inputs;
+    protected Matrix outputs;
 
     public SupervisedModel(Vector<Vector<Double>> inputs,
                            Vector<Vector<Double>> outputs){
