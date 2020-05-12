@@ -137,6 +137,26 @@ public class Matrix {
         return matrix;
     }
 
+    public Matrix sum(double d){
+        Matrix m = new Matrix(this.getRowSize(), this.getColSize());
+        for (int i = 0; i < getRowSize(); i++){
+            for (int j = 0; j < getColSize(); j++){
+                m.set(i, j, get(i, j) + d);
+            }
+        }
+        return m;
+    }
+
+    public Matrix multiplication(double d){
+        Matrix m = new Matrix(this.getRowSize(), this.getColSize());
+        for (int i = 0; i < getRowSize(); i++){
+            for (int j = 0; j < getColSize(); j++){
+                m.set(i, j, get(i, j) * d);
+            }
+        }
+        return m;
+    }
+
     public static Matrix subtract(Matrix a, Matrix b) throws Exception {
         if(a.colSize != b.colSize || a.rowSize != b.rowSize){
             throw new DifferentMatrixSizeFoundException(a.rowSize,a.colSize,b.rowSize,b.colSize);
