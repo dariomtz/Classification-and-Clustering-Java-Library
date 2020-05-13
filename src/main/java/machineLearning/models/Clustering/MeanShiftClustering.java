@@ -10,7 +10,7 @@ import java.util.Vector;
 public class MeanShiftClustering extends Clustering {
     protected List<MeanShiftCluster> clusters;
 
-    MeanShiftClustering(Matrix data, double radius){
+    public MeanShiftClustering(Matrix data, double radius){
         super(new Matrix(data), radius);
         calculateClusters();
     }
