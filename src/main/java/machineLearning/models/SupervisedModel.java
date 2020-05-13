@@ -20,7 +20,7 @@ public abstract class SupervisedModel implements Model {
         setOutputs(outputs);
     }
 
-    abstract void train();
+    protected abstract void train();
 
     public void setInputs(Matrix inputs) {
         this.inputs = inputs;
