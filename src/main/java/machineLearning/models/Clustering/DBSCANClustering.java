@@ -10,13 +10,12 @@ import java.util.Vector;
 public class DBSCANClustering extends Clustering {
     LinkedList<HashSet<Vector<Double>>>groups;
     int minPoints;
-    double radius;
 
     public DBSCANClustering(Matrix data, int minPoints, double radius){
         super(data);
         setMinPoints(minPoints);
         setRadius(radius);
-        train();
+        calculateClusters();
     }
 
     protected void setGroups(LinkedList<HashSet<Vector<Double>>> groups) {
@@ -35,17 +34,10 @@ public class DBSCANClustering extends Clustering {
         return minPoints;
     }
 
-    public void setRadius(double radius) {
-        if(radius<=0)throw new IllegalArgumentException("illegal radius: "+radius);
-        this.radius = radius;
-    }
 
-    public double getRadius() {
-        return radius;
-    }
 
     @Override
-    public void train() {
+    public void calculateClusters() {
         LinkedList<Vector<Double>> points = new LinkedList<>();
         for(int i = 0; i< dataPoints.rows; i++)points.add(dataPoints.getRow(i));
         LinkedList<HashSet<Vector<Double>>> groups = new LinkedList<>();
@@ -75,7 +67,7 @@ public class DBSCANClustering extends Clustering {
         setGroups(groups);
         Vector<Integer> classified = new Vector<>();
         for(Double group: classify(dataPoints).getCol(dataPoints.cols))classified.add(group.intValue());
-        setClassified(classified);
+        setClassification(classified);
 
     }
 

@@ -53,12 +53,11 @@ public class DBSCANClusteringTest {
            for(int j = 0; j<3; j++)matrix.set(i,j,random.nextDouble()+145);
         }
         DBSCANClustering clustering = new DBSCANClustering(matrix,5,0.5);
-        clustering.train();
         for(int i = 0; i<clustering.groups.size(); i++) System.out.println(i+") "+clustering.groups.get(i));
         System.out.println();
         System.out.println();
         for(int i = 0; i< matrix.rows; i++){
-            System.out.println(matrix.getRow(i)+", "+clustering.classified.get(i));
+            System.out.println(matrix.getRow(i)+", "+clustering.classification.get(i));
         }
     }
 }
