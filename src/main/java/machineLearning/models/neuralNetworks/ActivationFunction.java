@@ -1,5 +1,7 @@
 package machineLearning.models.neuralNetworks;
 
+import machineLearning.algebra.Matrix;
+
 import java.util.Vector;
 
 enum ActivationFunction {
@@ -40,6 +42,16 @@ enum ActivationFunction {
         }
     }
 
+    public Matrix func(Matrix m){
+        Matrix newMatrix = new Matrix(m);
+        for (int i = 0; i < newMatrix.rowSize; i++) {
+            for (int j = 0; j < newMatrix.colSize; j++) {
+                newMatrix.set(i, j, this.func(m.get(i, j)));
+            }
+        }
+        return newMatrix;
+    }
+
     public double derivative(double x){
         switch (this){
             case RELU:
@@ -66,5 +78,15 @@ enum ActivationFunction {
         for (int i = 0; i < v.size(); i++) {
             v.set(i, derivative(v.get(i)));
         }
+    }
+
+    public Matrix derivative(Matrix m){
+        Matrix newMatrix = new Matrix(m);
+        for (int i = 0; i < newMatrix.rowSize; i++) {
+            for (int j = 0; j < newMatrix.colSize; j++) {
+                newMatrix.set(i, j, this.derivative(m.get(i, j)));
+            }
+        }
+        return newMatrix;
     }
 }

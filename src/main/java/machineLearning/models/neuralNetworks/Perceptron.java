@@ -55,8 +55,10 @@ public class Perceptron extends NeuralNetwork {
         populateWeights();
 
         for (int i = 0; i < 60000; i++) {
-            approximation = Matrix.sum(Matrix.multiplication(inputs, weights), bias);
+            approximation = af.func(Matrix.sum(Matrix.multiplication(inputs, weights), bias));
 
+            weights = Matrix.multiplication(Matrix.transpose(Matrix.subtract(approximation, outputs)),
+                                            af.derivative(Matrix.sum(Matrix.multiplication(inputs, weights), bias))
         }
 
     }
