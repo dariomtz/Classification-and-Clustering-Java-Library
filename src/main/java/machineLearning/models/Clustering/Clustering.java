@@ -7,14 +7,16 @@ import java.util.Vector;
 
 public abstract class Clustering extends UnsupervisedModel {
     protected Vector<Integer> classification;
-    double radius;
+    protected double radius;
 
-    public Clustering(Matrix data){
+    public Clustering(Matrix data, double radius){
         super(data);
+        setRadius(radius);
     }
 
-    public Clustering(Vector<Vector<Double>> data){
+    public Clustering(Vector<Vector<Double>> data, double radius){
         super(data);
+        setRadius(radius);
     }
 
     abstract public void calculateClusters();
