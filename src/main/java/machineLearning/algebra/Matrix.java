@@ -26,7 +26,7 @@ public class Matrix {
     public Matrix(Vector<Vector<Double>> vector){
         this(vector.size(),vector.get(0).size());
         for(int i = 0; i< rows; i++){
-            if (vector.get(i).size() != cols) throw new DifferentVectorSizeFound(cols, vector.get(i).size());
+            if (vector.get(i).size() != cols) throw new DifferentVectorSizeFoundException(cols, vector.get(i).size());
             for(int j = 0; j< cols; j++){
                 if(vector.get(i).get(j) != null) set(i,j,vector.get(i).get(j));
                 else set(i,j,0);
@@ -50,7 +50,7 @@ public class Matrix {
 
     public <T extends Number> void setRow(int row, Vector<T>vector){
         if(vector.size() != this.cols) {
-            throw new DifferentVectorSizeFound(vector.size(),this.cols);
+            throw new DifferentVectorSizeFoundException(vector.size(),this.cols);
         }
         if(row >= rows || row < 0 ){
             throw  new IndexOutOfBoundsException("index out of range in row: " + row);
@@ -61,7 +61,7 @@ public class Matrix {
     }
     public <T extends Number>void setCol(int col, Vector<T>vector){
         if(vector.size() != this.rows) {
-            throw new DifferentVectorSizeFound(vector.size(),this.rows);
+            throw new DifferentVectorSizeFoundException(vector.size(),this.rows);
         }
         if(col >= cols || col < 0 ){
             throw new  IndexOutOfBoundsException("index out of range in col: " + col);
@@ -117,7 +117,7 @@ public class Matrix {
 
     public static Matrix sum(Matrix m, Vector<Double> v){
         if(v.size() != m.cols){
-            throw new DifferentVectorSizeFound(v.size(),m.cols);
+            throw new DifferentVectorSizeFoundException(v.size(),m.cols);
         }
         Matrix newMatrix = new Matrix(m.rows, m.cols);
 
@@ -125,26 +125,6 @@ public class Matrix {
             newMatrix.setCol(i, Algebra.sum(m.getCol(i), v.get(i)));
         }
         return newMatrix;
-    }
-
-    public Matrix sum(double d){
-        Matrix m = new Matrix(this.rows, this.cols);
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < cols; j++){
-                m.set(i, j, get(i, j) + d);
-            }
-        }
-        return m;
-    }
-
-    public Matrix multiplication(double d){
-        Matrix m = new Matrix(this.rows, this.cols);
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < cols; j++){
-                m.set(i, j, get(i, j) * d);
-            }
-        }
-        return m;
     }
 
     public static Matrix subtract(Matrix a, Matrix b){
@@ -160,7 +140,7 @@ public class Matrix {
 
     public static Vector<Double> subtract(Vector<Double> v, Matrix m){
         if(v.size() != m.cols){
-            throw new DifferentVectorSizeFound(v.size(),m.cols);
+            throw new DifferentVectorSizeFoundException(v.size(),m.cols);
         }
         Vector<Double> sum = new Vector<>();
         for (int i = 0; i < v.size(); i++) {
@@ -190,7 +170,7 @@ public class Matrix {
     }
     public static Vector<Double> multiplication(Matrix matrix, Vector<Double> vector){
         if(vector.size() != matrix.cols){
-            throw new DifferentVectorSizeFound(vector.size(),matrix.cols);
+            throw new DifferentVectorSizeFoundException(vector.size(),matrix.cols);
         }
         Matrix newMatrix = new Matrix(vector.size(),1);
         newMatrix.setCol(0,vector);
@@ -199,7 +179,7 @@ public class Matrix {
 
     public static Vector<Double> multiplication(Vector<Double> v, Matrix m){
         if(v.size() != m.rows){
-            throw new DifferentVectorSizeFound(v.size(),m.rows);
+            throw new DifferentVectorSizeFoundException(v.size(),m.rows);
         }
         Matrix newMatrix = new Matrix(1,v.size());
         newMatrix.setRow(0,v);
@@ -212,12 +192,6 @@ public class Matrix {
             newMatrix.setCol(i,matrix.getRow(i));
         }
         return newMatrix;
-    }
-
-    public static Matrix Identity(int size){
-    Matrix matrix = new Matrix(size,size);
-    for(int i = 0; i<size; i++)matrix.set(i,i,1.0);
-    return matrix;
     }
 
     public static Matrix directMultiplication(Matrix a, Matrix b){

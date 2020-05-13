@@ -17,7 +17,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testSumMethod() throws DifferentVectorSizeFound {
+    public void testSumMethod() throws DifferentVectorSizeFoundException {
         Vector<Integer> v1 = new Vector<>();
         v1.add(5);
         v1.add(3);
@@ -43,7 +43,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testSubtractVectorMethod() throws DifferentVectorSizeFound {
+    public void testSubtractVectorMethod() throws DifferentVectorSizeFoundException {
         Vector<Integer> v1 = new Vector<>();
         v1.add(5);
         v1.add(3);
@@ -76,7 +76,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testMultMethod() throws DifferentVectorSizeFound {
+    public void testMultMethod() throws DifferentVectorSizeFoundException {
 
         Vector<Integer> v1 = new Vector<>();
         v1.add(0);
@@ -99,7 +99,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testDivisionMethod() throws DifferentVectorSizeFound {
+    public void testDivisionMethod() throws DifferentVectorSizeFoundException {
         Vector<Integer> v1 = new Vector<>();
         v1.add(1);
         v1.add(2);
@@ -126,7 +126,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testCrossMethod() throws DifferentVectorSizeFound {
+    public void testCrossMethod() throws DifferentVectorSizeFoundException {
         Vector<Integer> v1 = new Vector<>();
         v1.add(5);
         v1.add(3);
@@ -158,7 +158,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testDotMethod() throws DifferentVectorSizeFound {
+    public void testDotMethod() throws DifferentVectorSizeFoundException {
         Vector<Integer> v4 = new Vector<>();
         v4.add(0);
         v4.add(1);
@@ -172,7 +172,7 @@ public class AlgebraTest {
     }
 
     @Test
-    public void testEuclideanDistance() throws DifferentVectorSizeFound {
+    public void testEuclideanDistance() throws DifferentVectorSizeFoundException {
         Vector<Integer> v4 = new Vector<>();
         v4.add(0);
         v4.add(1);
