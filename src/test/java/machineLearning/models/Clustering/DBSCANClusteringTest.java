@@ -34,7 +34,7 @@ public class DBSCANClusteringTest {
         Assert.assertTrue("The IllegalArgumentException must be thrown",correct);
     }
 
-    @Test
+    
     public void testTrainingMethod(){
         Matrix matrix = new Matrix(53,3);
         Random random = new Random();

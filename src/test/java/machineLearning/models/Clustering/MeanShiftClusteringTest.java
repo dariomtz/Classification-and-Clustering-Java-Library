@@ -22,7 +22,7 @@ public class MeanShiftClusteringTest {
         }
         Assert.assertTrue("The IllegalArgumentException must be thrown",correct);
     }
-    @Test
+
     public void testTrainingMethod(){
         int points = 1000;
         int dimensions = 50;
