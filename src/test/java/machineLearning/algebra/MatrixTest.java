@@ -58,6 +58,7 @@ public class MatrixTest {
         //Vector constructor Exception LessThanMinimumSizeForMatrix
         correct = false;
         Vector<Vector<Double>> v2 = new Vector<>();
+        v2.add(new Vector<>());
         try{
             m4 = new Matrix(v2);
         }catch (Exception ex){
@@ -365,6 +366,16 @@ public class MatrixTest {
             m2.setCol(i,v1);
         }
         Assert.assertEquals("The transposed m1 must be equal to m2",m2,Matrix.transpose(m1));
+
+    }
+
+    @Test
+    public void testCloneMatrix(){
+        Matrix matrix1 = new Matrix(10,100);
+        Matrix matrix2 = new Matrix(matrix1);
+        matrix2.set(0,0,145);
+        Assert.assertNotEquals("The values must be different",matrix1.get(0,0),matrix2.get(0,0));
+
 
     }
 }
