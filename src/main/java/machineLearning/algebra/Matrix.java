@@ -47,6 +47,7 @@ public class Matrix {
         }
         Matrix.get(row).set(col,value.doubleValue());
     }
+
     public <T extends Number> void setRow(int row, Vector<T>vector){
         if(vector.size() != this.cols) {
             throw new DifferentVectorSizeFound(vector.size(),this.cols);
@@ -114,6 +115,38 @@ public class Matrix {
         return matrix;
     }
 
+    public static Matrix sum(Matrix m, Vector<Double> v){
+        if(v.size() != m.cols){
+            throw new DifferentVectorSizeFound(v.size(),m.cols);
+        }
+        Matrix newMatrix = new Matrix(m.rows, m.cols);
+
+        for (int i = 0; i < v.size(); i++) {
+            newMatrix.setCol(i, Algebra.sum(m.getCol(i), v.get(i)));
+        }
+        return newMatrix;
+    }
+
+    public Matrix sum(double d){
+        Matrix m = new Matrix(this.rows, this.cols);
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < cols; j++){
+                m.set(i, j, get(i, j) + d);
+            }
+        }
+        return m;
+    }
+
+    public Matrix multiplication(double d){
+        Matrix m = new Matrix(this.rows, this.cols);
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < cols; j++){
+                m.set(i, j, get(i, j) * d);
+            }
+        }
+        return m;
+    }
+
     public static Matrix subtract(Matrix a, Matrix b){
         if(a.cols != b.cols || a.rows != b.rows){
             throw new DifferentMatrixSizeFoundException(a.rows,a.cols,b.rows,b.cols);
@@ -123,6 +156,17 @@ public class Matrix {
             matrix.setCol(i,Algebra.subtract(a.getCol(i),b.getCol(i)));
         }
         return matrix;
+    }
+
+    public static Vector<Double> subtract(Vector<Double> v, Matrix m){
+        if(v.size() != m.cols){
+            throw new DifferentVectorSizeFound(v.size(),m.cols);
+        }
+        Vector<Double> sum = new Vector<>();
+        for (int i = 0; i < v.size(); i++) {
+            sum.add(Algebra.sum(m.getCol(i)));
+        }
+        return Algebra.subtract(v, sum);
     }
 
     public static Matrix multiplication(Matrix a, Matrix b){
@@ -145,12 +189,21 @@ public class Matrix {
         return newMatrix;
     }
     public static Vector<Double> multiplication(Matrix matrix, Vector<Double> vector){
-        if(vector.size() != matrix.rows){
-            throw new DifferentVectorSizeFound(vector.size(),matrix.rows);
+        if(vector.size() != matrix.cols){
+            throw new DifferentVectorSizeFound(vector.size(),matrix.cols);
         }
         Matrix newMatrix = new Matrix(vector.size(),1);
         newMatrix.setCol(0,vector);
         return multiplication(matrix,newMatrix).getCol(0);
+    }
+
+    public static Vector<Double> multiplication(Vector<Double> v, Matrix m){
+        if(v.size() != m.rows){
+            throw new DifferentVectorSizeFound(v.size(),m.rows);
+        }
+        Matrix newMatrix = new Matrix(1,v.size());
+        newMatrix.setRow(0,v);
+        return multiplication(newMatrix,m).getRow(0);
     }
 
     public static Matrix transpose(Matrix matrix){
@@ -165,6 +218,19 @@ public class Matrix {
     Matrix matrix = new Matrix(size,size);
     for(int i = 0; i<size; i++)matrix.set(i,i,1.0);
     return matrix;
+    }
+
+    public static Matrix directMultiplication(Matrix a, Matrix b){
+        if(a.cols != b.cols || a.rows != b.rows){
+            throw new DifferentMatrixSizeFoundException(a.rows,a.cols,b.rows,b.cols);
+        }
+        Matrix newMatrix = new Matrix(a.rows, a.cols);
+        for (int i = 0; i < newMatrix.rows; i++) {
+            for (int j = 0; j < newMatrix.cols; j++) {
+                newMatrix.set(i, j, a.get(i, j) * b.get(i, j));
+            }
+        }
+        return newMatrix;
     }
 
     @Override
