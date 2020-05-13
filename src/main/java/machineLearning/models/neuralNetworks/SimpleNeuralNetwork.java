@@ -90,10 +90,13 @@ public class SimpleNeuralNetwork extends NeuralNetwork {
 
     }
 
-
+    @Override
+    public Vector<Double> classify(Vector<Double> input) {
+        return null;
+    }
 
     @Override
-    public <T extends Number> Vector<T> classify(Vector<T> input) {
+    public Matrix classify(Matrix input) {
         return null;
     }
 }
