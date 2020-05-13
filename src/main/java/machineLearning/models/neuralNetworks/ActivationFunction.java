@@ -44,8 +44,8 @@ enum ActivationFunction {
 
     public Matrix func(Matrix m){
         Matrix newMatrix = new Matrix(m);
-        for (int i = 0; i < newMatrix.rowSize; i++) {
-            for (int j = 0; j < newMatrix.colSize; j++) {
+        for (int i = 0; i < newMatrix.rows; i++) {
+            for (int j = 0; j < newMatrix.cols; j++) {
                 newMatrix.set(i, j, this.func(m.get(i, j)));
             }
         }
@@ -82,8 +82,8 @@ enum ActivationFunction {
 
     public Matrix derivative(Matrix m){
         Matrix newMatrix = new Matrix(m);
-        for (int i = 0; i < newMatrix.rowSize; i++) {
-            for (int j = 0; j < newMatrix.colSize; j++) {
+        for (int i = 0; i < newMatrix.rows; i++) {
+            for (int j = 0; j < newMatrix.cols; j++) {
                 newMatrix.set(i, j, this.derivative(m.get(i, j)));
             }
         }
