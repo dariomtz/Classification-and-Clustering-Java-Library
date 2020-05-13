@@ -81,4 +81,6 @@ public abstract class NeuralNetwork extends SupervisedModel {
     public void setGamma(double gamma) {
         this.gamma = gamma;
     }
+
+    public abstract void train();
 }
