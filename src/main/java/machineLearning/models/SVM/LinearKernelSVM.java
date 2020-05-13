@@ -108,7 +108,7 @@ public class LinearKernelSVM extends SVM{
         return new Matrix(res);
     }
 
-    double getHingeLoss(Double x1, Double x2, Double y, Double w1, Double w2){
+    private double getHingeLoss(Double x1, Double x2, Double y, Double w1, Double w2){
         double loss = 0;
         if(y==1){
             loss = 1-(w1*x1 + w2*x2 + b);
@@ -119,7 +119,7 @@ public class LinearKernelSVM extends SVM{
         return loss;
     }
 
-    double getSVMCost(Vector<Double> x1, Vector<Double> x2, Vector<Double> y){
+    private double getSVMCost(Vector<Double> x1, Vector<Double> x2, Vector<Double> y){
         int n = y.size();
         // hinge loss
         double cost=0;
