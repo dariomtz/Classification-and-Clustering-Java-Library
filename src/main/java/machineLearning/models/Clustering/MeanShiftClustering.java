@@ -15,7 +15,7 @@ public class MeanShiftClustering extends Clustering {
 
 
     MeanShiftClustering(Matrix data, double radius){
-        super(data);
+        super(new Matrix(data));
         setRadius(radius);
         train();
     }

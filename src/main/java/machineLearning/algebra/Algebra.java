@@ -17,7 +17,7 @@ public class Algebra {
         return sum;
     }
 
-    public static <U extends Number,V extends Number> Vector<Double> sum(Vector<U> a, Vector<V> b) throws DifferentVectorSizeFound{
+    public static <U extends Number,V extends Number> Vector<Double> sum(Vector<U> a, Vector<V> b){
         if(a.size()!= b.size()) throw new DifferentVectorSizeFound(a.size(),b.size());
         Vector<Double> sum = new Vector<>();
         int i;
@@ -34,7 +34,7 @@ public class Algebra {
         return sum;
     }
 
-    public static <U extends Number,V extends Number> Vector<Double> subtract(Vector<U> a, Vector<V> b) throws DifferentVectorSizeFound{
+    public static <U extends Number,V extends Number> Vector<Double> subtract(Vector<U> a, Vector<V> b){
         if(a.size()!= b.size()) throw new DifferentVectorSizeFound(a.size(),b.size());
         Vector<Double> sub = new Vector<>();
         int i;
@@ -65,7 +65,7 @@ public class Algebra {
         return mult;
     }
 
-    public static <U extends Number, V extends Number> Vector<Double> mult(Vector<U> a, Vector <V> b) throws DifferentVectorSizeFound{
+    public static <U extends Number, V extends Number> Vector<Double> mult(Vector<U> a, Vector <V> b){
         if(a.size()!= b.size()) throw new DifferentVectorSizeFound(a.size(),b.size());
         Vector<Double> mult = new Vector<>();
         for (int i = 0; i < a.size(); i++) {
@@ -74,7 +74,7 @@ public class Algebra {
         return mult;
     }
 
-    public static <U extends Number, V extends Number> Vector<Double> division(Vector<U> a, Vector<V> b) throws DifferentVectorSizeFound{
+    public static <U extends Number, V extends Number> Vector<Double> division(Vector<U> a, Vector<V> b){
         if(a.size()!= b.size()) throw new DifferentVectorSizeFound(a.size(),b.size());
         Vector<Double> div = new Vector<>();
         for (int i = 0; i < a.size(); i++) {
@@ -97,7 +97,7 @@ public class Algebra {
         return div;
     }
 
-    public static <U extends Number,V extends Number> Vector<Double> cross(Vector<U> a, Vector<V> b) throws DifferentVectorSizeFound{
+    public static <U extends Number,V extends Number> Vector<Double> cross(Vector<U> a, Vector<V> b){
         if(a.size()!= b.size()) throw new DifferentVectorSizeFound(a.size(),b.size());
         Vector<Double> cross = new Vector<>();
 
@@ -114,10 +114,9 @@ public class Algebra {
         return cross;
     }
 
-    public static <U extends Number,V extends Number> double dot(Vector<U> a, Vector<V> b) throws DifferentVectorSizeFound{
+    public static <U extends Number,V extends Number> double dot(Vector<U> a, Vector<V> b){
         if(a.size()!= b.size()) throw new DifferentVectorSizeFound(a.size(),b.size());
         double dot = 0;
-
         int i;
         for(i=0;i<a.size();i++){
             dot += a.get(i).doubleValue()*b.get(i).doubleValue();
@@ -125,7 +124,7 @@ public class Algebra {
         return dot;
     }
 
-    public static <U extends Number, V extends Number> double euclideanDistance(Vector<U> u, Vector<V> v) throws DifferentVectorSizeFound{
+    public static <U extends Number, V extends Number> double euclideanDistance(Vector<U> u, Vector<V> v){
         if(u.size() != v.size()) throw new DifferentVectorSizeFound(u.size(),v.size());
         int i;
         double euclideanD = 0.0;

@@ -24,24 +24,29 @@ public class MeanShiftClusteringTest {
     }
     @Test
     public void testTrainingMethod(){
-        Matrix matrix = new Matrix(50,3);
-        for(int i = 0; i<25; i++){
-            for(int j = 0; j<3; j++){
-                matrix.set(i,j,new Random().nextDouble());
-            }
-        }
-        for(int i = 25; i<50; i++){
-            for(int j = 0; j<3; j++){
-                matrix.set(i,j,new Random().nextDouble()+50);
+        int points = 1000;
+        int dimensions = 50;
+        Matrix matrix = new Matrix(points,dimensions);
+        Random random = new Random(System.currentTimeMillis());
+
+        for(int i = 0; i<points; i++){
+            for(int j = 0; j<dimensions; j++){
+                matrix.set(i,j,random.nextGaussian());
             }
         }
 
-        MeanShiftClustering clustering = new MeanShiftClustering(matrix,0.5);
-        clustering.train();
+        for(int i = 0; i< matrix.rowSize; i++){
+            System.out.println(matrix.getRow(i));
+        }
+        System.out.println();
+        MeanShiftClustering clustering = new MeanShiftClustering(matrix,7);
+
         for(int i = 0; i<clustering.groups.size(); i++) System.out.println(i+") "+clustering.groups.get(i));
         System.out.println();
         for(int i = 0; i< matrix.rowSize; i++){
-            System.out.println(matrix.getRow(i)+", "+clustering.classified.get(i));
+            System.out.println(clustering.classified.get(i)+", "+matrix.getRow(i));
         }
+
+        System.out.println();
     }
 }
