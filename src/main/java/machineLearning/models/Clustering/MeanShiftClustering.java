@@ -11,13 +11,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MeanShiftClustering extends Clustering {
     protected List<Vector<Double>> groups;
-    double radius;
+
 
 
     MeanShiftClustering(Matrix data, double radius){
         super(new Matrix(data));
         setRadius(radius);
-        train();
+        calculateClusters();
     }
 
     protected void setGroups(List<Vector<Double>> groups) {
@@ -27,23 +27,13 @@ public class MeanShiftClustering extends Clustering {
     public List<Vector<Double>> getGroups() {
         return groups;
     }
-
-    public void setRadius(double radius) {
-        if(radius<=0)throw new IllegalArgumentException("illegal radius: "+radius);
-        this.radius = radius;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
     @Override
-    public void train(){
+    public void calculateClusters(){
 
         //Create all the initial groups
         ConcurrentLinkedQueue<Vector<Double>> clusters = new ConcurrentLinkedQueue<>();
-        for(int i = 0; i<data.rowSize;i++){
-            Vector<Double> group = new Vector<Double>(data.getRow(i));
+        for(int i = 0; i< dataPoints.rows; i++){
+            Vector<Double> group = new Vector<Double>(dataPoints.getRow(i));
             boolean inside = false;
             for(Vector<Double> cluster2: clusters){
                 if(Algebra.euclideanDistance(group,cluster2)<=radius){
@@ -62,11 +52,11 @@ public class MeanShiftClustering extends Clustering {
             do{
                 change = false;
                 int points = 0;
-                Vector<Double> centerPoint = new Vector<>(data.colSize);
-                for(int i = 0; i<data.colSize; i++)centerPoint.add(0.0);
-                for(int i = 0; i<data.rowSize; i++){
-                    if(Algebra.euclideanDistance(group,data.getRow(i))<=radius){
-                        centerPoint = Algebra.sum(centerPoint,data.getRow(i));
+                Vector<Double> centerPoint = new Vector<>(dataPoints.cols);
+                for(int i = 0; i< dataPoints.cols; i++)centerPoint.add(0.0);
+                for(int i = 0; i< dataPoints.rows; i++){
+                    if(Algebra.euclideanDistance(group, dataPoints.getRow(i))<=radius){
+                        centerPoint = Algebra.sum(centerPoint, dataPoints.getRow(i));
                         points ++;
                     }
                 }
@@ -94,15 +84,15 @@ public class MeanShiftClustering extends Clustering {
         }
 
         setGroups(finalClusters);
-        Matrix classificated = classify(this.data);
+        Matrix classificated = classify(this.dataPoints);
         Vector<Integer>classified = new Vector<>();
-        for(int i = 0; i<data.rowSize; i++) classified.add(groups.indexOf(classificated.getRow(i)));
-        setClassified(classified);
+        for(int i = 0; i< dataPoints.rows; i++) classified.add(groups.indexOf(classificated.getRow(i)));
+        setClassification(classified);
     }
     @Override
     public Matrix classify(Matrix input) {
         Matrix output = new Matrix(input);
-        for(int i = 0; i<output.rowSize; i++) output.setRow(i,classify(input.getRow(i)));
+        for(int i = 0; i<output.rows; i++) output.setRow(i,classify(input.getRow(i)));
         return output;
     }
 

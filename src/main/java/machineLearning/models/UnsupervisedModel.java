@@ -4,21 +4,21 @@ import machineLearning.algebra.Matrix;
 import java.util.Vector;
 
 public abstract class UnsupervisedModel implements Model{
-    protected Matrix data;
+    protected Matrix dataPoints;
 
-    public UnsupervisedModel(Vector<Vector<Double>> data){
-        setData(new Matrix(data));
+    public UnsupervisedModel(Vector<Vector<Double>> dataPoints){
+        setDataPoints(new Matrix(dataPoints));
     }
 
-    public UnsupervisedModel(Matrix data){
-        setData(data);
+    public UnsupervisedModel(Matrix dataPoints){
+        setDataPoints(dataPoints);
     }
 
-    public void setData(Matrix data) {
-        this.data = data;
+    public void setDataPoints(Matrix dataPoints) {
+        this.dataPoints = dataPoints;
     }
 
-    public Matrix getData() {
-        return data;
+    public Matrix getDataPoints() {
+        return dataPoints;
     }
 }
