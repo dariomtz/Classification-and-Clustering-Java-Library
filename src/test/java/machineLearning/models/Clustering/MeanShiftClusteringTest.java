@@ -5,9 +5,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Random;
+import java.util.Vector;
 
 public class MeanShiftClusteringTest {
-    @Test
+
     public void testConstructorMethods(){
         Matrix matrix = new Matrix(50,2);
         MeanShiftClustering clustering = new MeanShiftClustering(matrix,1.0);
@@ -22,9 +23,10 @@ public class MeanShiftClusteringTest {
         }
         Assert.assertTrue("The IllegalArgumentException must be thrown",correct);
     }
+    @Test
     public void testTrainingMethod(){
         int points = 1000;
-        int dimensions = 50;
+        int dimensions = 2;
         Matrix matrix = new Matrix(points,dimensions);
         Random random = new Random(System.currentTimeMillis());
 
@@ -33,13 +35,8 @@ public class MeanShiftClusteringTest {
                 matrix.set(i,j,random.nextGaussian());
             }
         }
-        MeanShiftClustering clustering = new MeanShiftClustering(matrix,7);
-        for(int i = 0; i<clustering.groups.size(); i++) System.out.println(i+") "+clustering.groups.get(i));
-        System.out.println();
-        for(int i = 0; i< matrix.rows; i++){
-            System.out.println(clustering.classification.get(i)+", "+matrix.getRow(i));
-        }
-
-        System.out.println();
+        MeanShiftClustering clustering = new MeanShiftClustering(matrix,0.5);
+        System.out.println(clustering);
     }
+
 }

@@ -1,15 +1,14 @@
 package machineLearning.models.Clustering;
 
-import machineLearning.algebra.Algebra;
 import machineLearning.algebra.Matrix;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Vector;
 
 public class DBSCANClustering extends Clustering {
-    LinkedList<HashSet<Vector<Double>>>groups;
+    LinkedList<DBSCANCluster> clusters;
     int minPoints;
+    LinkedList<Vector<Double>>noise = new LinkedList<>();
 
     public DBSCANClustering(Matrix data, int minPoints, double radius){
         super(data,radius);
@@ -17,15 +16,15 @@ public class DBSCANClustering extends Clustering {
         calculateClusters();
     }
 
-    protected void setGroups(LinkedList<HashSet<Vector<Double>>> groups) {
-        this.groups = groups;
+    protected void setClusters(LinkedList<DBSCANCluster> clusters) {
+        this.clusters = clusters;
     }
 
-    public LinkedList<HashSet<Vector<Double>>> getGroups() {
-        return groups;
+    public LinkedList<DBSCANCluster> getClusters() {
+        return clusters;
     }
 
-    public void setMinPoints(int minPoints) {
+    protected void setMinPoints(int minPoints) {
         if(minPoints<=0)throw new IllegalArgumentException("illegal minPoints: "+minPoints);
         this.minPoints = minPoints;
     }
@@ -33,56 +32,46 @@ public class DBSCANClustering extends Clustering {
         return minPoints;
     }
 
+    protected void setNoise(LinkedList<Vector<Double>> noise) {
+        this.noise = noise;
+    }
 
+    protected void addNoise(Vector<Double> noise){
+        this.noise.add(noise);
+    }
+
+    public LinkedList<Vector<Double>> getNoise() {
+        return noise;
+    }
 
     @Override
     public void calculateClusters() {
         LinkedList<Vector<Double>> points = new LinkedList<>();
         for(int i = 0; i< dataPoints.rows; i++)points.add(dataPoints.getRow(i));
-        LinkedList<HashSet<Vector<Double>>> groups = new LinkedList<>();
-        LinkedList<Vector<Double>>searching = new LinkedList<>();
+        LinkedList<DBSCANCluster> clusters = new LinkedList<>();
         while(!points.isEmpty()){
-            searching.add(points.poll());
-            HashSet<Vector<Double>>group = new HashSet<>();
-            while(!searching.isEmpty()){
-                Vector<Double> point = searching.poll();
-                group.add(point);
-                HashSet<Vector<Double>> neigbors = new HashSet<>();
-                for(int i = 0; i< dataPoints.rows; i++){
-                    Vector<Double> point2 = dataPoints.getRow(i);
-                    if(point.equals(point2))continue;
-                    if(Algebra.euclideanDistance(point,point2)<=radius) neigbors.add(point2);
-                }
-                if(neigbors.size()>=minPoints){
-                    for (Vector<Double> point2 : neigbors)
-                        if(group.add(point2))searching.add(point2);
-                }
-            }
-            if(group.size() >1){
-                groups.add(group);
-                points.removeAll(group);
+            DBSCANCluster cluster = new DBSCANCluster(points.poll(),radius,clusters.size(), minPoints);
+            while(cluster.updateCluster(dataPoints));
+            if(cluster.getNumPoints() >1){
+                clusters.add(cluster);
+                points.removeAll(cluster.getPoints());
             }
         }
-        setGroups(groups);
+        setClusters(clusters);
         Vector<Integer> classified = new Vector<>();
         for(Double group: classify(dataPoints).getCol(dataPoints.cols))classified.add(group.intValue());
         setClassification(classified);
-
     }
 
     @Override
-    public Vector<Double> classify(Vector<Double> input) {
-        Vector<Double> vector = (Vector<Double>) input.clone();
+    public Vector<Double> classify(Vector<Double> point) {
+        Vector<Double> vector = (Vector<Double>) point.clone();
         double groupNum = -1;
         int i = 0;
-        for (HashSet<Vector<Double>>group : groups){
+        for (DBSCANCluster cluster : clusters){
             if(groupNum != -1)break;
-            for(Vector<Double> point : group){
-                if(Algebra.euclideanDistance(point,input)<radius) {
-                    groupNum = i;
-                    break;
-                }
-
+            if(cluster.inRange(point)){
+                groupNum = cluster.getIndex();
             }
             i++;
         }
@@ -91,9 +80,25 @@ public class DBSCANClustering extends Clustering {
     }
 
     @Override
-    public Matrix classify(Matrix input) {
-        Matrix matrix = new Matrix(input.rows,input.cols +1);
-        for(int i = 0; i<matrix.rows; i++)matrix.setRow(i,classify(input.getRow(i)));
+    public Matrix classify(Matrix dataPoints) {
+        Matrix matrix = new Matrix(dataPoints.rows, dataPoints.cols +1);
+        for(int i = 0; i<matrix.rows; i++){
+            matrix.setRow(i,classify(dataPoints.getRow(i)));
+            if(matrix.get(i,dataPoints.cols)== -1)
+                addNoise(dataPoints.getRow(i));
+        }
         return matrix;
+    }
+
+    @Override
+    public String toString(){
+        String s = super.toString();
+        s += "MinPoints: "+minPoints+"\nClusters: [\n";
+        for(DBSCANCluster cluster: clusters)
+            s+= cluster;
+        s+="]\nNoise:  [\n";
+        for(Vector<Double> noise : noise)
+            s+="\t"+noise+"\n";
+        return s+"\t]\n";
     }
 }
