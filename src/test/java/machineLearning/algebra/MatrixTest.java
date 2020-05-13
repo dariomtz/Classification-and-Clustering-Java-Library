@@ -87,7 +87,7 @@ public class MatrixTest {
             m4 = new Matrix(v2);
         }catch (Exception ex){
             m4 = null;
-            if(ex instanceof DifferentVectorSizeFound)
+            if(ex instanceof DifferentVectorSizeFoundException)
                 correct = true;
         }
         Assert.assertTrue("The DifferentVectorSizeFound Exception is showed for invalid vector",correct);
@@ -154,7 +154,7 @@ public class MatrixTest {
         try{
             m1.setRow(0,v1);
         }catch (Exception ex){
-            if(ex instanceof DifferentVectorSizeFound)
+            if(ex instanceof DifferentVectorSizeFoundException)
                 correct = true;
         }
         Assert.assertTrue("The DifferentVectorSizeFound is showed in setRow",correct);
@@ -163,7 +163,7 @@ public class MatrixTest {
         try{
             m1.setCol(0,v1);
         }catch (Exception ex){
-            if(ex instanceof DifferentVectorSizeFound)
+            if(ex instanceof DifferentVectorSizeFoundException)
                 correct = true;
         }
         Assert.assertTrue("The DifferentVectorSizeFound is showed in setCol",correct);
@@ -345,7 +345,7 @@ public class MatrixTest {
         try{
             Matrix.multiplication(m1,v1);
         }catch (Exception ex){
-            if(ex instanceof DifferentVectorSizeFound)
+            if(ex instanceof DifferentVectorSizeFoundException)
                 correct = true;
         }
         Assert.assertTrue("The DifferentVectorSizeFound Exception must be showed",correct);
