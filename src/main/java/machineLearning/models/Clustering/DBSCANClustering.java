@@ -47,7 +47,7 @@ public class DBSCANClustering extends Clustering {
     @Override
     public void train() {
         LinkedList<Vector<Double>> points = new LinkedList<>();
-        for(int i = 0; i<data.rowSize; i++)points.add(data.getRow(i));
+        for(int i = 0; i< dataPoints.rows; i++)points.add(dataPoints.getRow(i));
         LinkedList<HashSet<Vector<Double>>> groups = new LinkedList<>();
         LinkedList<Vector<Double>>searching = new LinkedList<>();
         while(!points.isEmpty()){
@@ -57,8 +57,8 @@ public class DBSCANClustering extends Clustering {
                 Vector<Double> point = searching.poll();
                 group.add(point);
                 HashSet<Vector<Double>> neigbors = new HashSet<>();
-                for(int i = 0; i<data.rowSize; i++){
-                    Vector<Double> point2 = data.getRow(i);
+                for(int i = 0; i< dataPoints.rows; i++){
+                    Vector<Double> point2 = dataPoints.getRow(i);
                     if(point.equals(point2))continue;
                     if(Algebra.euclideanDistance(point,point2)<=radius) neigbors.add(point2);
                 }
@@ -74,7 +74,7 @@ public class DBSCANClustering extends Clustering {
         }
         setGroups(groups);
         Vector<Integer> classified = new Vector<>();
-        for(Double group: classify(data).getCol(data.colSize))classified.add(group.intValue());
+        for(Double group: classify(dataPoints).getCol(dataPoints.cols))classified.add(group.intValue());
         setClassified(classified);
 
     }
@@ -101,8 +101,8 @@ public class DBSCANClustering extends Clustering {
 
     @Override
     public Matrix classify(Matrix input) {
-        Matrix matrix = new Matrix(input.rowSize,input.colSize+1);
-        for(int i = 0; i<matrix.rowSize;i++)matrix.setRow(i,classify(input.getRow(i)));
+        Matrix matrix = new Matrix(input.rows,input.cols +1);
+        for(int i = 0; i<matrix.rows; i++)matrix.setRow(i,classify(input.getRow(i)));
         return matrix;
     }
 }
