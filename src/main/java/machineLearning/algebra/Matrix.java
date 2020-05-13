@@ -188,6 +188,19 @@ public class Matrix {
     return matrix;
     }
 
+    public static Matrix directMultiplication(Matrix a, Matrix b){
+        if(a.cols != b.cols || a.rows != b.rows){
+            throw new DifferentMatrixSizeFoundException(a.rows,a.cols,b.rows,b.cols);
+        }
+        Matrix newMatrix = new Matrix(a.rows, a.cols);
+        for (int i = 0; i < newMatrix.rows; i++) {
+            for (int j = 0; j < newMatrix.cols; j++) {
+                newMatrix.set(i, j, a.get(i, j) * b.get(i, j));
+            }
+        }
+        return newMatrix;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
