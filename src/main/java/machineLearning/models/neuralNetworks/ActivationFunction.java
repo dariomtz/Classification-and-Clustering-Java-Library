@@ -36,10 +36,12 @@ enum ActivationFunction {
         return 0;
     }
 
-    public void func(Vector<Double> v){
+    public Vector<Double> func(Vector<Double> v){
+        Vector<Double> u = new Vector<>();
         for (int i = 0; i < v.size(); i++) {
-            v.set(i, func(v.get(i)));
+            u.add(func(v.get(i)));
         }
+        return u;
     }
 
     public Matrix func(Matrix m){
@@ -74,10 +76,12 @@ enum ActivationFunction {
         return 0;
     }
 
-    public void derivative(Vector<Double> v){
+    public Vector<Double> derivative(Vector<Double> v){
+        Vector<Double> u = new Vector<>();
         for (int i = 0; i < v.size(); i++) {
-            v.set(i, derivative(v.get(i)));
+            u.add(derivative(v.get(i)));
         }
+        return u;
     }
 
     public Matrix derivative(Matrix m){

@@ -1,5 +1,6 @@
 package machineLearning.models.SVM;
 
+import machineLearning.algebra.Algebra;
 import machineLearning.algebra.Matrix;
 import java.util.Vector;
 
