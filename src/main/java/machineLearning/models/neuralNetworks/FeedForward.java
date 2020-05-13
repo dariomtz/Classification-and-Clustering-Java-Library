@@ -80,6 +80,7 @@ public class FeedForward extends NeuralNetwork {
 
     @Override
     public void train() {
+
     }
     
 
