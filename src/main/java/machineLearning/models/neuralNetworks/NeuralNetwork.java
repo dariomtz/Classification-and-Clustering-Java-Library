@@ -82,5 +82,4 @@ public abstract class NeuralNetwork extends SupervisedModel {
         this.gamma = gamma;
     }
 
-    public abstract void train();
 }

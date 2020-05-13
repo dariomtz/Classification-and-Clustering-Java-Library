@@ -79,10 +79,9 @@ public class FeedForward extends NeuralNetwork {
     }
 
     @Override
-    public void train() {
+    protected void train() {
 
     }
-    
 
     @Override
     public Vector<Double> classify(Vector<Double> input) {
