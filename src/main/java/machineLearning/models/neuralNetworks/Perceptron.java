@@ -9,7 +9,7 @@ public class Perceptron extends SupervisedModel {
     protected Matrix weights;
     protected Vector<Double> bias;
     protected Matrix approximation;
-    protected ActivationFunction activationFunction = ActivationFunction.LEAKY_RELU;
+    
 
     public Perceptron(Vector<Vector<Double>> inputs,
                                Vector<Vector<Double>> outputs){

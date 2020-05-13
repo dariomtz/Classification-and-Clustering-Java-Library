@@ -6,9 +6,8 @@ import machineLearning.models.SupervisedModel;
 import java.util.Random;
 import java.util.Vector;
 
-public class SimpleNeuralNetwork extends SupervisedModel {
+public class SimpleNeuralNetwork extends NeuralNetwork {
     protected int layers = 1;
-    protected ActivationFunction activationFunction = ActivationFunction.LEAKY_RELU;
     protected Vector<Double> out;
 
     public SimpleNeuralNetwork(Vector<Vector<Double>> inputs,
@@ -45,18 +44,14 @@ public class SimpleNeuralNetwork extends SupervisedModel {
     public SimpleNeuralNetwork(Vector<Vector<Double>> inputs,
                                Vector<Vector<Double>> outputs,
                                ActivationFunction af){
-        super(inputs, outputs);
-
-        this.activationFunction = activationFunction;
+        super(inputs, outputs, af);
         train();
     }
 
     public SimpleNeuralNetwork(Matrix inputs,
                                Matrix outputs,
                                ActivationFunction af){
-        super(inputs, outputs);
-
-        this.activationFunction = activationFunction;
+        super(inputs, outputs, af);
         train();
     }
 
@@ -64,9 +59,7 @@ public class SimpleNeuralNetwork extends SupervisedModel {
                                Vector<Vector<Double>> outputs,
                                ActivationFunction af,
                                int layers){
-        super(inputs, outputs);
-
-        this.activationFunction = activationFunction;
+        super(inputs, outputs, af);
         setLayers(layers);
         train();
     }
@@ -75,9 +68,7 @@ public class SimpleNeuralNetwork extends SupervisedModel {
                                Matrix outputs,
                                ActivationFunction af,
                                int layers){
-        super(inputs, outputs);
-
-        this.activationFunction = activationFunction;
+        super(inputs, outputs, af);
         setLayers(layers);
         train();
     }
