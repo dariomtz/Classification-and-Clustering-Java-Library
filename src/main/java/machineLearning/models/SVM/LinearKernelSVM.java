@@ -89,14 +89,23 @@ public class LinearKernelSVM extends SVM{
 
     @Override
     public Vector<Double> classify(Vector<Double> input) {
-        return null;
+        double res= ((Algebra.dot(input,w)) + b) > 0 ? 1 : -1;
+        Vector<Double> classified = new Vector<>();
+        classified.add(res);
+        return classified;
     }
 
     @Override
     public Matrix classify(Matrix input) {
-        return null;
+        Vector<Double> convert = new Vector<>();
+        int i,j=0;
+        for(i=0;i<input.getRow(0).size();i++){
+            convert.add(input.get(0,i));
+        }
+        Vector<Vector<Double>> res = new Vector<>();
+        res.add(classify(convert));
+        return new Matrix(res);
     }
-
 
     double getHingeLoss(Double x1, Double x2, Double y, Double w1, Double w2){
         double loss = 0;
