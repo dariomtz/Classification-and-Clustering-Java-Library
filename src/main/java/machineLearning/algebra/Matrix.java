@@ -4,15 +4,11 @@ import java.util.Vector;
 
 public class Matrix {
     protected Vector<Vector<Double>>Matrix;
-    protected final int rowSize,colSize;
+    public final int rowSize,colSize;
 
     public Matrix(int row, int col){
-        if(row <= 0){
-            throw new IllegalArgumentException("Illegal row size: "+row);
-        }
-        if(col <= 0){
-            throw new IllegalArgumentException("Illegal col size: "+col);
-        }
+        if(row <= 0) throw new IllegalArgumentException("Illegal row size: "+row);
+        if(col <= 0) throw new IllegalArgumentException("Illegal col size: "+col);
         this.colSize = col;
         this.rowSize = row;
         Matrix = new Vector<>(row);
@@ -27,50 +23,33 @@ public class Matrix {
             }
         }
     }
-    public Matrix(Vector<Vector<Double>> vector) throws DifferentVectorSizeFound{
-        int row = vector.size();
-        if(row <=0){
-            throw new IllegalArgumentException("Illegal row size: "+row);
-        }
-        int col = vector.get(0).size();
-        if(col <=0){
-            throw new IllegalArgumentException("Illegal col size: "+col);
-        }
-        for (Vector<Double> doubles : vector) {
-            for (int j = 0; j < col; j++) {
-                if (doubles.size() != col) {
-                    throw new DifferentVectorSizeFound(col, doubles.size());
-                }
+    public Matrix(Vector<Vector<Double>> vector){
+        this(vector.size(),vector.get(0).size());
+        for(int i = 0; i<rowSize; i++){
+            if (vector.get(i).size() != colSize) throw new DifferentVectorSizeFound(colSize, vector.get(i).size());
+            for(int j = 0; j<colSize; j++){
+                if(vector.get(i).get(j) != null) set(i,j,vector.get(i).get(j));
+                else set(i,j,0);
             }
         }
-        Matrix = (Vector<Vector<Double>>) vector.clone();
-        rowSize = vector.size();
-        colSize = vector.get(0).size();
     }
 
-    public Matrix(Matrix matrix) throws DifferentVectorSizeFound{
+    public Matrix(Matrix matrix){
         this(matrix.Matrix);
     }
 
-    public void set(int row, int col, Double value){
+    public <T extends Number>void set(int row, int col,  T value){
         if(row >=rowSize || row < 0 ){
             throw new IndexOutOfBoundsException("index out of range in row: " + row);
         }
         if( col >=colSize || col < 0){
             throw new IndexOutOfBoundsException("index out of range in col: " + col);
         }
-        Matrix.get(row).set(col,value);
+        Matrix.get(row).set(col,value.doubleValue());
     }
 
-    public int getRowSize() {
-        return rowSize;
-    }
+    public <T extends Number> void setRow(int row, Vector<T>vector){
 
-    public int getColSize() {
-        return colSize;
-    }
-
-    public void setRow(int row, Vector<Double>vector) throws DifferentVectorSizeFound{
         if(vector.size() != this.colSize) {
             throw new DifferentVectorSizeFound(vector.size(),this.colSize);
         }
@@ -81,7 +60,7 @@ public class Matrix {
             this.set(row,i,vector.get(i));
         }
     }
-    public void setCol(int col, Vector<Double>vector) throws DifferentVectorSizeFound{
+    public <T extends Number>void setCol(int col, Vector<T>vector){
         if(vector.size() != this.rowSize) {
             throw new DifferentVectorSizeFound(vector.size(),this.rowSize);
         }
@@ -120,7 +99,7 @@ public class Matrix {
         return vector;
 
     }
-    public static Matrix sum(Matrix... matrices) throws Exception{
+    public static Matrix sum(Matrix... matrices){
         int row = matrices[0].rowSize;
         int col = matrices[0].colSize;
         for(Matrix m : matrices)if(m.rowSize != row || m.colSize != col){
@@ -138,9 +117,9 @@ public class Matrix {
     }
 
     public Matrix sum(double d){
-        Matrix m = new Matrix(this.getRowSize(), this.getColSize());
-        for (int i = 0; i < getRowSize(); i++){
-            for (int j = 0; j < getColSize(); j++){
+        Matrix m = new Matrix(this.rowSize, this.colSize);
+        for (int i = 0; i < rowSize; i++){
+            for (int j = 0; j < colSize; j++){
                 m.set(i, j, get(i, j) + d);
             }
         }
@@ -148,16 +127,17 @@ public class Matrix {
     }
 
     public Matrix multiplication(double d){
-        Matrix m = new Matrix(this.getRowSize(), this.getColSize());
-        for (int i = 0; i < getRowSize(); i++){
-            for (int j = 0; j < getColSize(); j++){
+        Matrix m = new Matrix(this.rowSize, this.colSize);
+        for (int i = 0; i < rowSize; i++){
+            for (int j = 0; j < colSize; j++){
                 m.set(i, j, get(i, j) * d);
             }
         }
         return m;
     }
 
-    public static Matrix subtract(Matrix a, Matrix b) throws Exception {
+    public static Matrix subtract(Matrix a, Matrix b){
+
         if(a.colSize != b.colSize || a.rowSize != b.rowSize){
             throw new DifferentMatrixSizeFoundException(a.rowSize,a.colSize,b.rowSize,b.colSize);
         }//RETORNA UNA EXCEPTION
@@ -168,7 +148,7 @@ public class Matrix {
         return matrix;
     }
 
-    public static Matrix multiplication(Matrix a, Matrix b) throws Exception {
+    public static Matrix multiplication(Matrix a, Matrix b){
         if(a.colSize != b.rowSize){
             throw new IncompatibleMatrixSizeOperationException(a.colSize,b.rowSize);
         }
@@ -180,14 +160,14 @@ public class Matrix {
         }
         return matrix;
     }
-    public static Matrix multiplication(Matrix matrix, Double scale) throws Exception{
+    public static Matrix multiplication(Matrix matrix, Double scale){
         Matrix newMatrix = new Matrix(matrix);
         for(int i = 0; i<matrix.colSize; i++){
             newMatrix.setCol(i,Algebra.mult(scale,matrix.getCol(i)));
         }
         return newMatrix;
     }
-    public static Vector<Double> multiplication(Matrix matrix, Vector<Double> vector) throws Exception {
+    public static Vector<Double> multiplication(Matrix matrix, Vector<Double> vector){
         if(vector.size() != matrix.rowSize){
             throw new DifferentVectorSizeFound(vector.size(),matrix.rowSize);
         }
@@ -196,7 +176,7 @@ public class Matrix {
         return multiplication(matrix,newMatrix).getCol(0);
     }
 
-    public static Matrix transpose(Matrix matrix) throws Exception{
+    public static Matrix transpose(Matrix matrix){
         Matrix newMatrix = new Matrix(matrix.colSize,matrix.rowSize);
         for(int i = 0; i<newMatrix.colSize; i++){
             newMatrix.setCol(i,matrix.getRow(i));
