@@ -4,13 +4,13 @@ import java.util.Vector;
 
 public class Matrix {
     protected Vector<Vector<Double>>Matrix;
-    public final int rowSize,colSize;
+    public final int rows, cols;
 
     public Matrix(int row, int col){
         if(row <= 0) throw new IllegalArgumentException("Illegal row size: "+row);
         if(col <= 0) throw new IllegalArgumentException("Illegal col size: "+col);
-        this.colSize = col;
-        this.rowSize = row;
+        this.cols = col;
+        this.rows = row;
         Matrix = new Vector<>(row);
         Matrix.setSize(row);
         for (int i = 0; i<row; i++){
@@ -25,9 +25,9 @@ public class Matrix {
     }
     public Matrix(Vector<Vector<Double>> vector){
         this(vector.size(),vector.get(0).size());
-        for(int i = 0; i<rowSize; i++){
-            if (vector.get(i).size() != colSize) throw new DifferentVectorSizeFound(colSize, vector.get(i).size());
-            for(int j = 0; j<colSize; j++){
+        for(int i = 0; i< rows; i++){
+            if (vector.get(i).size() != cols) throw new DifferentVectorSizeFound(cols, vector.get(i).size());
+            for(int j = 0; j< cols; j++){
                 if(vector.get(i).get(j) != null) set(i,j,vector.get(i).get(j));
                 else set(i,j,0);
             }
@@ -39,69 +39,69 @@ public class Matrix {
     }
 
     public <T extends Number>void set(int row, int col,  T value){
-        if(row >=rowSize || row < 0 ){
+        if(row >= rows || row < 0 ){
             throw new IndexOutOfBoundsException("index out of range in row: " + row);
         }
-        if( col >=colSize || col < 0){
+        if( col >= cols || col < 0){
             throw new IndexOutOfBoundsException("index out of range in col: " + col);
         }
         Matrix.get(row).set(col,value.doubleValue());
     }
     public <T extends Number> void setRow(int row, Vector<T>vector){
-        if(vector.size() != this.colSize) {
-            throw new DifferentVectorSizeFound(vector.size(),this.colSize);
+        if(vector.size() != this.cols) {
+            throw new DifferentVectorSizeFound(vector.size(),this.cols);
         }
-        if(row >=rowSize || row < 0 ){
+        if(row >= rows || row < 0 ){
             throw  new IndexOutOfBoundsException("index out of range in row: " + row);
         }
-        for(int i = 0; i<colSize; i++){
+        for(int i = 0; i< cols; i++){
             this.set(row,i,vector.get(i));
         }
     }
     public <T extends Number>void setCol(int col, Vector<T>vector){
-        if(vector.size() != this.rowSize) {
-            throw new DifferentVectorSizeFound(vector.size(),this.rowSize);
+        if(vector.size() != this.rows) {
+            throw new DifferentVectorSizeFound(vector.size(),this.rows);
         }
-        if(col >=colSize || col < 0 ){
+        if(col >= cols || col < 0 ){
             throw new  IndexOutOfBoundsException("index out of range in col: " + col);
         }
-        for(int i = 0; i<rowSize; i++){
+        for(int i = 0; i< rows; i++){
             this.set(i,col,vector.get(i));
         }
     }
     public Double get(int row,int col){
-        if(row >=rowSize || row < 0 ){
+        if(row >= rows || row < 0 ){
             throw new IndexOutOfBoundsException("index out of range in row: " + row);
         }
-        if( col >=colSize || col < 0){
+        if( col >= cols || col < 0){
             throw new IndexOutOfBoundsException("index out of range in col: " + col);
         }
         return this.Matrix.get(row).get(col);
     }
     public Vector<Double> getRow(int row){
-        if(row >=rowSize || row < 0 ){
+        if(row >= rows || row < 0 ){
             throw  new IndexOutOfBoundsException("index out of range in row: " + row);
         }
-        Vector<Double>vector = new Vector<>(colSize);
-        vector.setSize(colSize);
-        for(int i = 0; i < colSize; i++)vector.set(i,get(row,i));
+        Vector<Double>vector = new Vector<>(cols);
+        vector.setSize(cols);
+        for(int i = 0; i < cols; i++)vector.set(i,get(row,i));
         return vector;
     }
     public Vector<Double> getCol(int col){
-        if(col >=colSize || col < 0 ){
+        if(col >= cols || col < 0 ){
             throw  new IndexOutOfBoundsException("index out of range in col: " + col);
         }
-        Vector<Double>vector = new Vector<>(rowSize);
-        vector.setSize(rowSize);
-        for(int i = 0; i < rowSize; i++)vector.set(i,get(i,col));
+        Vector<Double>vector = new Vector<>(rows);
+        vector.setSize(rows);
+        for(int i = 0; i < rows; i++)vector.set(i,get(i,col));
         return vector;
 
     }
     public static Matrix sum(Matrix... matrices){
-        int row = matrices[0].rowSize;
-        int col = matrices[0].colSize;
-        for(Matrix m : matrices)if(m.rowSize != row || m.colSize != col){
-            throw new DifferentMatrixSizeFoundException(row,col,m.rowSize,m.rowSize);
+        int row = matrices[0].rows;
+        int col = matrices[0].cols;
+        for(Matrix m : matrices)if(m.rows != row || m.cols != col){
+            throw new DifferentMatrixSizeFoundException(row,col,m.rows,m.rows);
         }
         Matrix matrix = new Matrix(row,col);
         for(int i = 0; i<col; i++) {
@@ -115,23 +115,23 @@ public class Matrix {
     }
 
     public static Matrix subtract(Matrix a, Matrix b){
-        if(a.colSize != b.colSize || a.rowSize != b.rowSize){
-            throw new DifferentMatrixSizeFoundException(a.rowSize,a.colSize,b.rowSize,b.colSize);
+        if(a.cols != b.cols || a.rows != b.rows){
+            throw new DifferentMatrixSizeFoundException(a.rows,a.cols,b.rows,b.cols);
         }//RETORNA UNA EXCEPTION
-        Matrix matrix = new Matrix(a.rowSize,a.colSize);
-        for(int i = 0; i<a.colSize; i++) {
+        Matrix matrix = new Matrix(a.rows,a.cols);
+        for(int i = 0; i<a.cols; i++) {
             matrix.setCol(i,Algebra.subtract(a.getCol(i),b.getCol(i)));
         }
         return matrix;
     }
 
     public static Matrix multiplication(Matrix a, Matrix b){
-        if(a.colSize != b.rowSize){
-            throw new IncompatibleMatrixSizeOperationException(a.colSize,b.rowSize);
+        if(a.cols != b.rows){
+            throw new IncompatibleMatrixSizeOperationException(a.cols,b.rows);
         }
-        Matrix matrix = new Matrix(a.rowSize,b.colSize);
-        for(int i = 0; i <matrix.colSize; i++){
-            for(int j = 0; j < matrix.rowSize; j++) {
+        Matrix matrix = new Matrix(a.rows,b.cols);
+        for(int i = 0; i <matrix.cols; i++){
+            for(int j = 0; j < matrix.rows; j++) {
                 matrix.set(j,i,Algebra.sum(Algebra.mult(a.getRow(j),b.getCol(i))));
             }
         }
@@ -139,14 +139,14 @@ public class Matrix {
     }
     public static Matrix multiplication(Matrix matrix, Double scale){
         Matrix newMatrix = new Matrix(matrix);
-        for(int i = 0; i<matrix.colSize; i++){
+        for(int i = 0; i<matrix.cols; i++){
             newMatrix.setCol(i,Algebra.mult(scale,matrix.getCol(i)));
         }
         return newMatrix;
     }
     public static Vector<Double> multiplication(Matrix matrix, Vector<Double> vector){
-        if(vector.size() != matrix.rowSize){
-            throw new DifferentVectorSizeFound(vector.size(),matrix.rowSize);
+        if(vector.size() != matrix.rows){
+            throw new DifferentVectorSizeFound(vector.size(),matrix.rows);
         }
         Matrix newMatrix = new Matrix(vector.size(),1);
         newMatrix.setCol(0,vector);
@@ -154,8 +154,8 @@ public class Matrix {
     }
 
     public static Matrix transpose(Matrix matrix){
-        Matrix newMatrix = new Matrix(matrix.colSize,matrix.rowSize);
-        for(int i = 0; i<newMatrix.colSize; i++){
+        Matrix newMatrix = new Matrix(matrix.cols,matrix.rows);
+        for(int i = 0; i<newMatrix.cols; i++){
             newMatrix.setCol(i,matrix.getRow(i));
         }
         return newMatrix;
@@ -172,8 +172,8 @@ public class Matrix {
         if (this == o) return true;
         if (!(o instanceof Matrix)) return false;
         Matrix matrix = (Matrix) o;
-        return rowSize == matrix.rowSize &&
-                colSize == matrix.colSize &&
+        return rows == matrix.rows &&
+                cols == matrix.cols &&
                 Matrix.equals(matrix.Matrix);
     }
     @Override

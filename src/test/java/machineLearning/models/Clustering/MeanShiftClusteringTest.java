@@ -12,7 +12,7 @@ public class MeanShiftClusteringTest {
         Matrix matrix = new Matrix(50,2);
         MeanShiftClustering clustering = new MeanShiftClustering(matrix,1.0);
         Assert.assertTrue("The data and the radius must be correct",
-                matrix.equals(clustering.getData())&& clustering.getRadius() == 1.0);
+                matrix.equals(clustering.getDataPoints())&& clustering.getRadius() == 1.0);
 
         boolean correct = false;
         try{
@@ -35,7 +35,7 @@ public class MeanShiftClusteringTest {
             }
         }
 
-        for(int i = 0; i< matrix.rowSize; i++){
+        for(int i = 0; i< matrix.rows; i++){
             System.out.println(matrix.getRow(i));
         }
         System.out.println();
@@ -43,7 +43,7 @@ public class MeanShiftClusteringTest {
 
         for(int i = 0; i<clustering.groups.size(); i++) System.out.println(i+") "+clustering.groups.get(i));
         System.out.println();
-        for(int i = 0; i< matrix.rowSize; i++){
+        for(int i = 0; i< matrix.rows; i++){
             System.out.println(clustering.classified.get(i)+", "+matrix.getRow(i));
         }
 
