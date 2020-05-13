@@ -12,9 +12,8 @@ public class DBSCANClustering extends Clustering {
     int minPoints;
 
     public DBSCANClustering(Matrix data, int minPoints, double radius){
-        super(data);
+        super(data,radius);
         setMinPoints(minPoints);
-        setRadius(radius);
         calculateClusters();
     }
 
