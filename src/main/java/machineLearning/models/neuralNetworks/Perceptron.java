@@ -7,10 +7,8 @@ import java.util.Vector;
 
 public class Perceptron extends NeuralNetwork {
     protected Matrix weights;
-    protected Matrix bias;
+    protected Vector<Double> bias;
     protected Matrix approximation;
-    
-    protected double gamma = 1;
 
     public Perceptron(Vector<Vector<Double>> inputs, Vector<Vector<Double>> outputs){
         super(inputs, outputs);
@@ -32,6 +30,26 @@ public class Perceptron extends NeuralNetwork {
         train();
     }
 
+    public Perceptron(Vector<Vector<Double>> inputs, Vector<Vector<Double>> outputs, double gamma){
+        super(inputs, outputs, gamma);
+        train();
+    }
+
+    public Perceptron(Matrix inputs, Matrix outputs, double gamma){
+        super(inputs, outputs, gamma);
+        train();
+    }
+
+    public Perceptron(Vector<Vector<Double>> inputs, Vector<Vector<Double>> outputs, ActivationFunction af, double gamma){
+        super(inputs, outputs, af, gamma);
+        train();
+    }
+
+    public Perceptron(Matrix inputs, Matrix outputs, ActivationFunction af, double gamma){
+        super(inputs, outputs, af, gamma);
+        train();
+    }
+
     private void populateWeights(){
         weights = new Matrix(inputs.cols, outputs.cols);
         Random r = new Random();
@@ -43,11 +61,9 @@ public class Perceptron extends NeuralNetwork {
     }
 
     private void populateBias(){
-        bias = new Matrix(inputs.rows, outputs.cols);
-        for (int i = 0; i < bias.rows; i++) {
-            for (int j = 0; j < bias.cols; j++) {
-                weights.set(i, j, 0);
-            }
+        bias = new Vector<>()
+        for (int i = 0; i < outputs.cols; i++) {
+            bias.add(0d);
         }
     }
 

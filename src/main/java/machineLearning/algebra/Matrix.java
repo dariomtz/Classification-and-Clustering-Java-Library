@@ -115,6 +115,18 @@ public class Matrix {
         return matrix;
     }
 
+    public static Matrix sum(Matrix m, Vector<Double> v){
+        if(v.size() != m.cols){
+            throw new DifferentVectorSizeFound(v.size(),m.cols);
+        }
+        Matrix newMatrix = new Matrix(m.rows, m.cols);
+
+        for (int i = 0; i < v.size(); i++) {
+            newMatrix.setCol(i, Algebra.sum(m.getCol(i), v.get(i)));
+        }
+        return newMatrix;
+    }
+
     public Matrix sum(double d){
         Matrix m = new Matrix(this.rows, this.cols);
         for (int i = 0; i < rows; i++){
@@ -144,6 +156,17 @@ public class Matrix {
             matrix.setCol(i,Algebra.subtract(a.getCol(i),b.getCol(i)));
         }
         return matrix;
+    }
+
+    public static Vector<Double> subtract(Vector<Double> v, Matrix m){
+        if(v.size() != m.cols){
+            throw new DifferentVectorSizeFound(v.size(),m.cols);
+        }
+        Vector<Double> sum = new Vector<>();
+        for (int i = 0; i < v.size(); i++) {
+            sum.add(Algebra.sum(m.getCol(i)));
+        }
+        return Algebra.subtract(v, sum);
     }
 
     public static Matrix multiplication(Matrix a, Matrix b){
