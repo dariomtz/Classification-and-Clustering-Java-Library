@@ -13,8 +13,23 @@ public class MeanShiftCluster extends Cluster {
         this.centroid = centroid;
     }
 
-    public boolean updateCentroid(Matrix matrix){
-        return false;
+    public boolean updateCentroid(Matrix dataPoints){
+        boolean change = false;
+        int points = 0;
+        Vector<Double> centerPoint = new Vector<>(dataPoints.cols);
+        for(int i = 0; i< dataPoints.cols; i++)centerPoint.add(0.0);
+        for(int i = 0; i< dataPoints.rows; i++){
+            if(Algebra.euclideanDistance(centroid, dataPoints.getRow(i))<=radius){
+                centerPoint = Algebra.sum(centerPoint, dataPoints.getRow(i));
+                points ++;
+            }
+        }
+        centerPoint = Algebra.division(centerPoint,points);
+        if(!centerPoint.equals(centroid)){
+            centroid = centerPoint;
+            change = true;
+        }
+        return change;
     }
 
     @Override
