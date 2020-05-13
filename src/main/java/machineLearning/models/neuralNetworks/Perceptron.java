@@ -75,6 +75,11 @@ public class Perceptron extends NeuralNetwork {
 
         for (int i = 0; i < 60000; i++) {
             approximation = af.func(Matrix.sum(Matrix.multiplication(inputs, weights), bias));
+            /*
+            Log the error rate to see if it goes down
+            if (i % 1000 == 0){
+                System.out.println(Matrix.mean(Matrix.subtract(approximation, outputs)));
+            }*/
 
             Matrix wPrime = partialDerivativeWeight();
             Matrix bPrime = partialDerivativeBias();
@@ -101,7 +106,7 @@ public class Perceptron extends NeuralNetwork {
 
     @Override
     public Vector<Double> classify(Vector<Double> input) {
-        return Algebra.sum(Matrix.multiplication(input, weights), bias);
+        return af.func(Algebra.sum(Matrix.multiplication(input, weights), bias));
     }
 
     @Override

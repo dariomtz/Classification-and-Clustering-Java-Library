@@ -207,6 +207,28 @@ public class Matrix {
         return newMatrix;
     }
 
+    public static double mean(Matrix m){
+        int q = 0;
+        double sum = 0d;
+        for (int i = 0; i < m.rows; i++) {
+            for (int j = 0; j < m.cols; j++) {
+                sum += m.get(i, j);
+                q++;
+            }
+        }
+        return sum / q;
+    }
+
+    public static Matrix round(Matrix m){
+        Matrix newMatrix = new Matrix(m.rows, m.cols);
+        for (int i = 0; i < m.rows; i++) {
+            for (int j = 0; j < m.cols; j++) {
+                newMatrix.set(i, j, Math.round(m.get(i, j)));
+            }
+        }
+        return newMatrix;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
