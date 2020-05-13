@@ -13,13 +13,13 @@ public class MatrixTest {
 
         //Basic constructor
         Matrix m1 = new Matrix(4,3);
-        Assert.assertEquals("The rowSize must be 4",4,m1.rowSize);
-        Assert.assertEquals("The colSize must be 3",3,m1.colSize);
+        Assert.assertEquals("The rowSize must be 4",4,m1.rows);
+        Assert.assertEquals("The colSize must be 3",3,m1.cols);
 
         //Copy constructor
         Matrix m2 = new Matrix(m1);
-        Assert.assertEquals("The rowSize must be the same than in matrix",m1.rowSize,m2.rowSize);
-        Assert.assertEquals("The colSize must be the same than in matrix",m1.colSize,m2.colSize);
+        Assert.assertEquals("The rowSize must be the same than in matrix",m1.rows,m2.rows);
+        Assert.assertEquals("The colSize must be the same than in matrix",m1.cols,m2.cols);
 
         //Vector constructor
         Vector<Vector<Double>>v1 = new Vector<>(40);
@@ -29,8 +29,8 @@ public class MatrixTest {
             v1.get(i).setSize(6);
         }
         Matrix m3 = new Matrix(v1);
-        Assert.assertEquals("The rowSize must be 40",40,m3.rowSize);
-        Assert.assertEquals("The colSize must be 6",6,m3.colSize);
+        Assert.assertEquals("The rowSize must be 40",40,m3.rows);
+        Assert.assertEquals("The colSize must be 6",6,m3.cols);
 
 
         //Basic constructor Exception LessThanMinimumSizeForMatrix
@@ -213,8 +213,8 @@ public class MatrixTest {
         Matrix m1 = new Matrix(4,5);
         Matrix m2 = new Matrix(4,5);
         double a = 0;
-        for(int i = 0; i< m1.rowSize;i++){
-            for(int j = 0; j<m1.colSize; j++){
+        for(int i = 0; i< m1.rows; i++){
+            for(int j = 0; j<m1.cols; j++){
                 m1.set(i,j,a);
                 m2.set(i,j,0.0);
                 a++;
@@ -240,8 +240,8 @@ public class MatrixTest {
         Matrix m1 = new Matrix(4,5);
         Matrix m2 = new Matrix(4,5);
         double a = 0;
-        for(int i = 0; i< m1.rowSize;i++){
-            for(int j = 0; j<m1.colSize; j++){
+        for(int i = 0; i< m1.rows; i++){
+            for(int j = 0; j<m1.cols; j++){
                 m1.set(i,j,a);
                 m2.set(i,j,0.0);
                 a++;
@@ -269,8 +269,8 @@ public class MatrixTest {
         Matrix m1 = new Matrix(4,5);
         Matrix m2 = new Matrix(m1);
         double a = 0;
-        for(int i = 0; i<m1.rowSize; i++){
-            for(int j = 0; j<m1.colSize;j++){
+        for(int i = 0; i<m1.rows; i++){
+            for(int j = 0; j<m1.cols; j++){
                 m1.set(i,j,a);
                 m2.set(i,j,a);
                 a++;
@@ -356,9 +356,9 @@ public class MatrixTest {
         Matrix m2 = new Matrix(4,3);
         Vector<Double> v1;
         double a = 1;
-        for(int i = 0;i<m1.rowSize;i++){
+        for(int i = 0; i<m1.rows; i++){
             v1 = new Vector<>();
-            for(int j = 0; j<m1.colSize;j++){
+            for(int j = 0; j<m1.cols; j++){
                 v1.add(a);
                 a++;
             }
