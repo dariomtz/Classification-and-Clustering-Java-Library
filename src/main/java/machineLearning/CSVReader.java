@@ -7,8 +7,8 @@ import java.util.Vector;
 
 public class CSVReader {
 
-    Vector<Vector<String>> inputs;
-    Vector<Vector<String>> outputs;
+    private Vector<Vector<String>> inputs;
+    private Vector<Vector<String>> outputs;
 
     public CSVReader(String fileName,
                      int firstColumnOfInputs,
