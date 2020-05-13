@@ -1,5 +1,6 @@
 package machineLearning.models.neuralNetworks;
 
+import machineLearning.algebra.Algebra;
 import machineLearning.algebra.Matrix;
 
 import java.util.Random;
@@ -61,7 +62,7 @@ public class Perceptron extends NeuralNetwork {
     }
 
     private void populateBias(){
-        bias = new Vector<>()
+        bias = new Vector<>();
         for (int i = 0; i < outputs.cols; i++) {
             bias.add(0d);
         }
@@ -100,12 +101,15 @@ public class Perceptron extends NeuralNetwork {
 
     @Override
     public Vector<Double> classify(Vector<Double> input) {
-
-        return null;
+        return Algebra.sum(Matrix.multiplication(input, weights), bias);
     }
 
     @Override
     public Matrix classify(Matrix input) {
-        return null;
+        Matrix newMatrix = new Matrix(input.rows, outputs.cols);
+        for (int i = 0; i < input.rows; i++) {
+            newMatrix.setRow(i, classify(input.getRow(i)));
+        }
+        return newMatrix;
     }
 }

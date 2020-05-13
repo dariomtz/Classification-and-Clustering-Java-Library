@@ -189,12 +189,21 @@ public class Matrix {
         return newMatrix;
     }
     public static Vector<Double> multiplication(Matrix matrix, Vector<Double> vector){
-        if(vector.size() != matrix.rows){
-            throw new DifferentVectorSizeFound(vector.size(),matrix.rows);
+        if(vector.size() != matrix.cols){
+            throw new DifferentVectorSizeFound(vector.size(),matrix.cols);
         }
         Matrix newMatrix = new Matrix(vector.size(),1);
         newMatrix.setCol(0,vector);
         return multiplication(matrix,newMatrix).getCol(0);
+    }
+
+    public static Vector<Double> multiplication(Vector<Double> v, Matrix m){
+        if(v.size() != m.rows){
+            throw new DifferentVectorSizeFound(v.size(),m.rows);
+        }
+        Matrix newMatrix = new Matrix(1,v.size());
+        newMatrix.setRow(0,v);
+        return multiplication(newMatrix,m).getRow(0);
     }
 
     public static Matrix transpose(Matrix matrix){
