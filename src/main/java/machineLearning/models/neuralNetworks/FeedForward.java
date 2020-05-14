@@ -136,7 +136,7 @@ public class FeedForward extends NeuralNetwork {
 
         approximation = new Matrix[layers];
 
-        for (int i = 0; i < 10000*layers; i++) {
+        for (int i = 0; i < 20000*layers; i++) {
             forwardPropagation();
             //Log the error rate to see if it goes down
             if (i % 1000 == 0 && logError){
