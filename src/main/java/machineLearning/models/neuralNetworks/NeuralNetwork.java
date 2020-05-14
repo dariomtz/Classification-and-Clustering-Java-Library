@@ -82,4 +82,12 @@ public abstract class NeuralNetwork extends SupervisedModel {
         this.gamma = gamma;
     }
 
+    @Override
+    public Matrix classify(Matrix input) {
+        Matrix newMatrix = new Matrix(input.rows, outputs.cols);
+        for (int i = 0; i < input.rows; i++) {
+            newMatrix.setRow(i, classify(input.getRow(i)));
+        }
+        return newMatrix;
+    }
 }
