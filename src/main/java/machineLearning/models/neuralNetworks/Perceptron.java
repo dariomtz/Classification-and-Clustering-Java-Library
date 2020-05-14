@@ -84,7 +84,7 @@ public class Perceptron extends NeuralNetwork {
         populateBias();
         populateWeights();
 
-        for (int i = 0; i < 15000; i++) {
+        for (int i = 0; i < 30000; i++) {
             approximation = af.func(Matrix.sum(Matrix.multiplication(inputs, weights), bias));
 
             //Log the error rate to see if it goes down
