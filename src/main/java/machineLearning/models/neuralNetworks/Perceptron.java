@@ -108,13 +108,4 @@ public class Perceptron extends NeuralNetwork {
     public Vector<Double> classify(Vector<Double> input) {
         return af.func(Algebra.sum(Matrix.multiplication(input, weights), bias));
     }
-
-    @Override
-    public Matrix classify(Matrix input) {
-        Matrix newMatrix = new Matrix(input.rows, outputs.cols);
-        for (int i = 0; i < input.rows; i++) {
-            newMatrix.setRow(i, classify(input.getRow(i)));
-        }
-        return newMatrix;
-    }
 }

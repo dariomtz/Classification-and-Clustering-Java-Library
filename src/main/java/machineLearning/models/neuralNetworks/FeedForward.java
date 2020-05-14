@@ -1,5 +1,6 @@
 package machineLearning.models.neuralNetworks;
 
+import machineLearning.algebra.Algebra;
 import machineLearning.algebra.Matrix;
 import machineLearning.models.SupervisedModel;
 
@@ -161,6 +162,7 @@ public class FeedForward extends NeuralNetwork {
                 delta = Matrix.directMultiplication(
                         err,
                         af.derivative(Matrix.sum(Matrix.multiplication(approximation[i - 1], weights[i]), bias[i])));
+
                 wPrime = Matrix.multiplication(Matrix.transpose(approximation[i - 1]),
                         delta);
 
@@ -169,7 +171,6 @@ public class FeedForward extends NeuralNetwork {
                         af.derivative(Matrix.sum(Matrix.multiplication(approximation[i - 1], weights[i]), bias[i])));
             }
 
-
             weights[i] = Matrix.subtract(weights[i], Matrix.multiplication(wPrime, gamma));
             bias[i] = Matrix.subtract(bias[i], Matrix.multiplication(bPrime, gamma));
         }
@@ -177,12 +178,15 @@ public class FeedForward extends NeuralNetwork {
 
     @Override
     public Vector<Double> classify(Vector<Double> input) {
-        return null;
-    }
-
-    @Override
-    public Matrix classify(Matrix input) {
-        return null;
+        Vector<Double> result = null;
+        for (int i = 0; i < layers; i++) {
+            if (i == 0){
+                result = af.func(Algebra.sum(Matrix.multiplication(input, weights[i]), bias[i]));
+            }else{
+                result = af.func(Algebra.sum(Matrix.multiplication(result, weights[i]), bias[i]));
+            }
+        }
+        return result;
     }
 }
 
