@@ -3,6 +3,7 @@ package machineLearning.models.Clustering;
 import machineLearning.algebra.Algebra;
 import machineLearning.algebra.Matrix;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -56,6 +57,16 @@ public class MeanShiftCluster extends Cluster {
             }
             if(!inside)clusters.add(cluster);
         }
+        HashSet<MeanShiftCluster> clustersToRemove = new HashSet<>();
+        for(int i = 0; i<clusters.size(); i++){
+            int num = 0;
+            for(int j = 0; j< dataPoints.rows; j++){
+                if(clusters.get(i).inRange(dataPoints.getRow(j)))num++;
+            }
+            if(num <= 1)clustersToRemove.add(clusters.get(i));
+        }
+        clusters.removeAll(clustersToRemove);
+
         return clusters;
     }
     @Override
