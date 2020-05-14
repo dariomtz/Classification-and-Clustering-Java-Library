@@ -9,6 +9,7 @@ import java.util.Vector;
 
 public class FeedForward extends NeuralNetwork {
     protected Matrix[] weights;
+    protected Matrix[] aphaWeights;
     protected Vector<Double>[] bias;
     protected Matrix[] approximation;
     protected int layers = 1;
@@ -100,14 +101,16 @@ public class FeedForward extends NeuralNetwork {
 
     private void populateBias(){
         bias = new Vector[layers];
+
         for (int i = 0; i < layers; i++) {
+            bias[i] = new Vector<>();
             if(i == layers -1){
-                bias[i] = new Vector<>(outputs.cols);
+                bias[i].setSize(outputs.cols);
             }else{
-                bias[i] = new Vector<>(inputs.cols);
+                bias[i].setSize(inputs.cols);
             }
-            for (int j = 0; j < bias[i].capacity(); j++) {
-                bias[i].set(i, 0d);
+            for (int j = 0; j < bias[i].size(); j++) {
+                bias[i].set(j, 0d);
             }
         }
     }
@@ -145,7 +148,7 @@ public class FeedForward extends NeuralNetwork {
             if(i == layers - 1)
                 err = Matrix.subtract(approximation[i], outputs);
             else
-                err = Matrix.multiplication(delta, weights[i]);
+                err = Matrix.multiplication(delta, Matrix.transpose(weights[i + 1]));
 
             if (i == 0){
                 delta = Matrix.directMultiplication(
@@ -171,8 +174,12 @@ public class FeedForward extends NeuralNetwork {
                         af.derivative(Matrix.sum(Matrix.multiplication(approximation[i - 1], weights[i]), bias[i])));
             }
 
-            weights[i] = Matrix.subtract(weights[i], Matrix.multiplication(wPrime, gamma));
+            aphaWeights[i] = Matrix.subtract(weights[i], Matrix.multiplication(wPrime, gamma));
             bias[i] = Matrix.subtract(bias[i], Matrix.multiplication(bPrime, gamma));
+        }
+
+        for (int i = 0; i < layers; i++) {
+            weights[i] = aphaWeights[i];
         }
     }
 
