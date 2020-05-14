@@ -4,7 +4,7 @@ import machineLearning.algebra.Matrix;
 
 import java.util.Vector;
 
-enum ActivationFunction {
+public enum ActivationFunction {
     RELU,
     LEAKY_RELU,
     SIGMOID,
