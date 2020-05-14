@@ -371,10 +371,27 @@ public class MatrixTest {
 
     @Test
     public void testCloneMatrix(){
+        //test using constructor clone
         Matrix matrix1 = new Matrix(10,100);
         Matrix matrix2 = new Matrix(matrix1);
+        // test if a edited value affects both
         matrix2.set(0,0,145);
-        Assert.assertNotEquals("The values must be different",matrix1.get(0,0),matrix2.get(0,0));
+        Assert.assertNotEquals("The values must be different",matrix1,matrix2);
+
+        //test if the values are the same
+        matrix2.set(0,0,0);
+        Assert.assertEquals("The values must be the same",matrix1,matrix2);
+
+        //tests with clone method
+        matrix2 = (Matrix) matrix1.clone();
+
+        matrix2.set(0,0,145);
+        Assert.assertNotEquals("The values must be different",matrix1,matrix2);
+
+        //test if the values are the same
+        matrix2.set(0,0,0);
+        Assert.assertEquals("The values must be the same",matrix1,matrix2);
+
 
 
     }

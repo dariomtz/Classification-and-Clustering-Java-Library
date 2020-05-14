@@ -2,7 +2,7 @@ package machineLearning.algebra;
 
 import java.util.Vector;
 
-public class Matrix {
+public class Matrix{
     protected Vector<Vector<Double>>Matrix;
     public final int rows, cols;
 
@@ -241,6 +241,11 @@ public class Matrix {
     @Override
     public String toString(){
         return Matrix.toString();
+    }
+
+    @Override
+    protected Object clone() {
+        return new Matrix(this);
     }
 }
 
