@@ -2,14 +2,13 @@ package machineLearning.models.neuralNetworks;
 
 import machineLearning.algebra.Algebra;
 import machineLearning.algebra.Matrix;
-import machineLearning.models.SupervisedModel;
 
 import java.util.Random;
 import java.util.Vector;
 
 public class FeedForward extends NeuralNetwork {
     protected Matrix[] weights;
-    protected Matrix[] aphaWeights;
+    protected Matrix[] alphaWeights;
     protected Vector<Double>[] bias;
     protected Matrix[] approximation;
     protected int layers = 1;
@@ -82,6 +81,7 @@ public class FeedForward extends NeuralNetwork {
 
     private void populateWeights(){
         weights = new Matrix[layers];
+        alphaWeights = new Matrix[layers];
         Random r = new Random();
 
         for (int i = 0; i < layers; i++) {
@@ -174,12 +174,12 @@ public class FeedForward extends NeuralNetwork {
                         af.derivative(Matrix.sum(Matrix.multiplication(approximation[i - 1], weights[i]), bias[i])));
             }
 
-            aphaWeights[i] = Matrix.subtract(weights[i], Matrix.multiplication(wPrime, gamma));
+            alphaWeights[i] = Matrix.subtract(weights[i], Matrix.multiplication(wPrime, gamma));
             bias[i] = Matrix.subtract(bias[i], Matrix.multiplication(bPrime, gamma));
         }
 
         for (int i = 0; i < layers; i++) {
-            weights[i] = aphaWeights[i];
+            weights[i] = alphaWeights[i];
         }
     }
 
