@@ -51,7 +51,18 @@ public class Perceptron extends NeuralNetwork {
         train();
     }
 
-    private void populateWeights(){
+    public Perceptron(Vector<Vector<Double>> inputs, Vector<Vector<Double>> outputs, ActivationFunction af,
+                      double gamma, boolean logError){
+        super(inputs, outputs, af, gamma, logError);
+        train();
+    }
+
+    public Perceptron(Matrix inputs, Matrix outputs, ActivationFunction af, double gamma, boolean logError){
+        super(inputs, outputs, af, gamma, logError);
+        train();
+    }
+
+    protected void populateWeights(){
         weights = new Matrix(inputs.cols, outputs.cols);
         Random r = new Random();
         for (int i = 0; i < weights.rows; i++) {
@@ -61,7 +72,7 @@ public class Perceptron extends NeuralNetwork {
         }
     }
 
-    private void populateBias(){
+    protected void populateBias(){
         bias = new Vector<>();
         for (int i = 0; i < outputs.cols; i++) {
             bias.add(0d);
@@ -73,13 +84,14 @@ public class Perceptron extends NeuralNetwork {
         populateBias();
         populateWeights();
 
-        for (int i = 0; i < 60000; i++) {
+        for (int i = 0; i < 15000; i++) {
             approximation = af.func(Matrix.sum(Matrix.multiplication(inputs, weights), bias));
-            /*
-            Log the error rate to see if it goes down
-            if (i % 1000 == 0){
+
+            //Log the error rate to see if it goes down
+
+            if (i % 1000 == 0 && logError){
                 System.out.println(Matrix.mean(Matrix.subtract(approximation, outputs)));
-            }*/
+            }
 
             Matrix wPrime = partialDerivativeWeight();
             Matrix bPrime = partialDerivativeBias();

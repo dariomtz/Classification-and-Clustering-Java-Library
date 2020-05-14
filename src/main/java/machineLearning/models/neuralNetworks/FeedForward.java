@@ -74,12 +74,26 @@ public class FeedForward extends NeuralNetwork {
         train();
     }
 
+    public FeedForward(Vector<Vector<Double>> inputs, Vector<Vector<Double>> outputs, ActivationFunction af,
+                       int layers, double gamma, boolean logError){
+        super(inputs, outputs, af, gamma, logError);
+        setLayers(layers);
+        train();
+    }
+
+    public FeedForward(Matrix inputs, Matrix outputs, ActivationFunction af,
+                       int layers, double gamma, boolean logError){
+        super(inputs, outputs, af, gamma, logError);
+        setLayers(layers);
+        train();
+    }
+
     protected void setLayers(int layers) {
         if (layers > 0)
             this.layers = layers;
     }
 
-    private void populateWeights(){
+    protected void populateWeights(){
         weights = new Matrix[layers];
         alphaWeights = new Matrix[layers];
         Random r = new Random();
@@ -99,7 +113,7 @@ public class FeedForward extends NeuralNetwork {
         }
     }
 
-    private void populateBias(){
+    protected void populateBias(){
         bias = new Vector[layers];
 
         for (int i = 0; i < layers; i++) {
@@ -122,12 +136,14 @@ public class FeedForward extends NeuralNetwork {
 
         approximation = new Matrix[layers];
 
-        for (int i = 0; i < 60000; i++) {
+        for (int i = 0; i < 10000*layers; i++) {
             forwardPropagation();
+            //Log the error rate to see if it goes down
+            if (i % 1000 == 0 && logError){
+                System.out.println(Matrix.mean(Matrix.subtract(approximation[layers-1], outputs)));
+            }
             backPropagation();
         }
-
-
     }
 
     protected void forwardPropagation(){

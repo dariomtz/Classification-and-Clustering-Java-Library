@@ -37,7 +37,7 @@ public class FeedForwardTest {
         trainingOutputs.set(3, 2, 0);
 
         FeedForward feedForward = new FeedForward(trainingInputs, trainingOutputs,
-                ActivationFunction.SIGMOID, 4, 0.1d);
+                ActivationFunction.SIGMOID, 2, 0.1d);
 
         Matrix test = trainingInputs;
 
