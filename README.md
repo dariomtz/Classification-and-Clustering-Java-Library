@@ -32,7 +32,4 @@ LinearKernelSVM        | public class         | **(Deprecated)** A Linear Kernel
 
 
 Note:
-The classes that appear to be deprecated is because at the beginning of the project we planned to developed them, but during its implementation, we decided to focus on the other models, which were difficult enough to fill up our schedules.
-
-
-
+Classes that are marked as deprecated were planned as part of the project, but during development, we decided to focus on the other models, which were difficult enough to fill up our schedules.
