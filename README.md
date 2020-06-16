@@ -9,6 +9,8 @@ Once you build it, you can import the generated .jar file into another project.
 
 ### Documentation
 
+When imported, you have access to all of the following classes. In the library, there are a few Runtime Exceptions that were not documented here.
+
 Name                   | Type                 | Use
 ---------------------- | -------------------  | ---------
 Algebra                | public class         | Contains static methods to do operations with Vector, such as norm, dot, sum, multiply, etc.
