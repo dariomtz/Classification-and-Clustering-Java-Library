@@ -19,17 +19,17 @@ CSVReader              | public class         | A class to read CSV files and re
 ActivationFunction     | public enum          | An enumeration with some activation functions. It implements its functions and its derivatives.
 Model                  | public interface     | Interface that represents a model
 UnsupervisedModel      | public abstract class| Base class for Unsupervised models
-Clustering             | public abstract class| ??
-MeanShiftClustering    | public class         | ??
-DBSCANClustering       | public class         | ??
-Cluster                | public abstract class| ??
-MeanShiftCluster       | public class         | ??
-DBSCANCluster          | public class         | ??
+Clustering             | public abstract class| Base class for Clustering models
+MeanShiftClustering    | public class         | A clustering model that implements the Mean Shift analysis technique
+DBSCANClustering       | public class         | A clustering model that implements the DBSCAN alghoritm
+Cluster                | public abstract class| Base class for clusters in clustering models
+MeanShiftCluster       | public class         | A cluster implementation for the Mean Shift analysis technique
+DBSCANCluster          | public class         | A cluster implementation for the DBSCAN alghoritm
 SupervisedModel        | public abstract class| Base class for supervised models
 NeuralNetwork          | public abstract class| Base class for Neural Network Models
-Perceptron             | public class         | A Perceptron Neural Network architecture.
+Perceptron             | public class         | A Perceptron Neural Network architecture
 FeedForward            | public class         | A Feed Forward Neural Network architecture. Currently, the size of each layer is not configurable.
-SVM                    | public abstract class| **(Deprecated)** A Support Vector Machine astract class.
+SVM                    | public abstract class| **(Deprecated)** A Support Vector Machine abstract class.
 LinearKernelSVM        | public class         | **(Deprecated)** A Linear Kernel Support Vector Machine.
 
 
